@@ -10,13 +10,17 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             return lookupByDistance(dictionary, data.distance)
         }
     }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
-                                         temperatureOfAirAdjustment, temperatureOfShellAdjustment,
+                                         temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,
                                          forwardWindAdjustment, lookupByDistance) {
         return function (data) {
             var windDirection = clockToRadian(data.windDirection);
             var forwardWind = Math.cos(windDirection) * data.windSpeed;
             var sideWind = Math.sin(windDirection) * data.windSpeed;
             var normTemperature = data.temperature - 15;
+            var normPressure = 9 * (data.positionHeight - 110) / 100;
+            if (normPressure < 0) {
+                normPressure = 0
+            }
             return {
                 originalSights: lookupByDistance(sightsTable[data.trajectory], data.distance),
                 derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], data.distance),
@@ -24,9 +28,11 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
                 forwardWindAdjustment: lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10,
                 temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory], data.distance) * normTemperature / 10,
                 temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10,
+                pressureAdjustment: lookupByDistance(pressureAdjustment[data.trajectory], data.distance) * normPressure / 10,
                 windInRadians: windDirection,
                 forwardWind: forwardWind,
-                sideWind: sideWind
+                sideWind: sideWind,
+                normalizedPressure: normPressure
             }
         }
     }).factory('clockToRadian', function () {
@@ -36,7 +42,9 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
         }
     }).factory('lookupByDistance', function () {
         return function (table, distance) {
-            error = Infinity;
+            var error = Infinity;
+            var currentError;
+            var key;
             for (var currentKey in table) {
                 currentError = Math.abs(currentKey - distance);
                 if (currentError < error) {
