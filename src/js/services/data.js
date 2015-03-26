@@ -17,11 +17,17 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             var forwardWind = Math.cos(windDirection) * data.windSpeed;
             var sideWind = Math.sin(windDirection) * data.windSpeed;
             var normTemperature = data.temperature - 15;
-            var normPressure = 9 * (data.positionHeight - 110) / 100;
+            var normPressure = 9 * (data.positionElevation - 110) / 100;
             if (normPressure < 0) {
                 normPressure = 0
             }
-            return {
+            var angleSign = 0;
+            if (data.trajectory = 'flat') {
+                angleSign = 1;
+            } else if (data.trajectory = 'hover') {
+                angleSign = -1;
+            }
+            var result = {
                 originalSights: lookupByDistance(sightsTable[data.trajectory], data.distance),
                 derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], data.distance),
                 sideWindAdjustment: lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10,
@@ -29,11 +35,16 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
                 temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory], data.distance) * normTemperature / 10,
                 temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10,
                 pressureAdjustment: lookupByDistance(pressureAdjustment[data.trajectory], data.distance) * normPressure / 10,
+                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
                 windInRadians: windDirection,
                 forwardWind: forwardWind,
                 sideWind: sideWind,
                 normalizedPressure: normPressure
-            }
+            };
+            result.adjustedSights = result.originalSights + result.forwardWindAdjustment
+            + result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment + result.pressureAdjustment
+            + result.angleAdjustment;
+            return result;
         }
     }).factory('clockToRadian', function () {
         return function (clock) {
