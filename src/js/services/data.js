@@ -10,16 +10,20 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             return lookupByDistance(dictionary, data.distance)
         }
     }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
+                                         temperatureOfAirAdjustment, temperatureOfShellAdjustment,
                                          forwardWindAdjustment, lookupByDistance) {
         return function (data) {
             var windDirection = clockToRadian(data.windDirection);
             var forwardWind = Math.cos(windDirection) * data.windSpeed;
             var sideWind = Math.sin(windDirection) * data.windSpeed;
+            var normTemperature = data.temperature - 15;
             return {
                 originalSights: lookupByDistance(sightsTable[data.trajectory], data.distance),
                 derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], data.distance),
                 sideWindAdjustment: lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10,
                 forwardWindAdjustment: lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10,
+                temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory], data.distance) * normTemperature / 10,
+                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10,
                 windInRadians: windDirection,
                 forwardWind: forwardWind,
                 sideWind: sideWind
