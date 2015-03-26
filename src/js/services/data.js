@@ -2,7 +2,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
     .factory('grenadesConsumptionCoefficient', function (lookupByDistance, singleTargetGrenadeConsumption, groupTargetGrenadeConsumption) {
         return function (data) {
             var dictionary;
-            if (data.type == 'single') {
+            if (data.type.value == 'single') {
                 dictionary = singleTargetGrenadeConsumption[data.task];
             } else {
                 dictionary = groupTargetGrenadeConsumption[data.trajectory][data.task];
@@ -22,19 +22,20 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
                 normPressure = 0
             }
             var angleSign = 0;
-            if (data.trajectory = 'flat') {
+            var trajectory = data.trajectory;
+            if (trajectory == 'flat') {
                 angleSign = 1;
-            } else if (data.trajectory = 'hover') {
+            } else if (trajectory == 'hover') {
                 angleSign = -1;
             }
             var result = {
-                originalSights: lookupByDistance(sightsTable[data.trajectory], data.distance),
-                derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], data.distance),
-                sideWindAdjustment: lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10,
-                forwardWindAdjustment: lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10,
-                temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory], data.distance) * normTemperature / 10,
-                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10,
-                pressureAdjustment: lookupByDistance(pressureAdjustment[data.trajectory], data.distance) * normPressure / 10,
+                originalSights: lookupByDistance(sightsTable[trajectory], data.distance),
+                derivationAdjustment: lookupByDistance(derivationAdjustments[trajectory], data.distance),
+                sideWindAdjustment: lookupByDistance(sideWindAdjustment[trajectory], data.distance) * sideWind / 10,
+                forwardWindAdjustment: lookupByDistance(forwardWindAdjustment[trajectory], data.distance) * forwardWind / 10,
+                temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[trajectory], data.distance) * normTemperature / 10,
+                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[trajectory], data.distance) * normTemperature / 10,
+                pressureAdjustment: lookupByDistance(pressureAdjustment[trajectory], data.distance) * normPressure / 10,
                 angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
                 windInRadians: windDirection,
                 forwardWind: forwardWind,

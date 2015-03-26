@@ -7,9 +7,8 @@
                 <label for="inputType" class="col-sm-2 control-label">Xaрактер</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control" id="inputType" ng-model="data.type">
-                        <option value="single">Одиночна</option>
-                        <option value="extended">Площинна</option>
+                    <select class="form-control" id="inputType" ng-model="data.type"
+                            ng-options="t.value as t.label for t in types">
                     </select>
                 </div>
             </div>
@@ -53,9 +52,8 @@
                 <label for="inputTrajectory" class="col-sm-2 control-label">Траекторія</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control" id="inputTrajectory" ng-model="data.trajectory" required>
-                        <option value="flat">Настильна</option>
-                        <option value="hover">Навісна</option>
+                    <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
+                            ng-options="t.value as t.label for t in trajectories">
                     </select>
                 </div>
             </div>
@@ -63,9 +61,8 @@
                 <label for="inputTask" class="col-sm-2 control-label">Задача</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control" id="inputTask" ng-model="data.task" required>
-                        <option value="destroy">Знищити</option>
-                        <option value="supress">Подавити</option>
+                    <select class="form-control" id="inputTask" ng-model="data.task"
+                            ng-options="t.value as t.label for t in tasks" required>
                     </select>
                 </div>
             </div>
@@ -76,16 +73,15 @@
 
                 <div class="col-sm-10">
                     <input type="number" class="form-control" id="inputPositionHeight"
-                           ng-model="data.positionElevation">
+                           ng-model="data.positionElevation" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputDevicesNumber" class="col-sm-2 control-label">Кількість гранатометів</label>
 
                 <div class="col-sm-10">
-                    <select class="form-control" id="inputDevicesNumber" ng-model="data.devicesNumber">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
+                    <select class="form-control" id="inputDevicesNumber" ng-model="data.devicesNumber"
+                            ng-options="t.value as t.label for t in counts" required>
                     </select>
                 </div>
             </div>
