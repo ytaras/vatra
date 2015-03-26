@@ -1,15 +1,13 @@
 angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
-    .factory('grenadesCoeffitient', function (singleTargetGrenadesCoef) {
+    .factory('grenadesConsumptionCoefficient', function (lookupByDistance, singleTargetGrenadeConsumption, groupTargetGrenadeConsumption) {
         return function (data) {
+            var dictionary;
             if (data.type == 'single') {
-                return singleTargetGrenadesCoef(data.task, data.distance);
+                dictionary = singleTargetGrenadeConsumption[data.task];
             } else {
-                console.log('Not supported');
+                dictionary = groupTargetGrenadeConsumption[data.trajectory][data.task];
             }
-        }
-    }).factory('singleTargetGrenadesCoef', function (lookupByDistance, singleTargetGrenadeConsumption) {
-        return function (task, distance) {
-            return lookupByDistance(singleTargetGrenadeConsumption[task], distance);
+            return lookupByDistance(dictionary, data.distance)
         }
     }).factory('lookupByDistance', function () {
         return function (table, distance) {
