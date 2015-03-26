@@ -9,7 +9,8 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             }
             return lookupByDistance(dictionary, data.distance)
         }
-    }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment, lookupByDistance) {
+    }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
+                                         forwardWindAdjustment, lookupByDistance) {
         return function (data) {
             var windDirection = clockToRadian(data.windDirection);
             var forwardWind = Math.cos(windDirection) * data.windSpeed;
@@ -18,6 +19,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
                 originalSights: lookupByDistance(sightsTable[data.trajectory], data.distance),
                 derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], data.distance),
                 sideWindAdjustment: lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10,
+                forwardWindAdjustment: lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10,
                 windInRadians: windDirection,
                 forwardWind: forwardWind,
                 sideWind: sideWind
