@@ -9,6 +9,13 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             }
             return lookupByDistance(dictionary, data.distance)
         }
+    }).factory('sightsValues', function (sightsTable, derivationAdjustments, lookupByDistance) {
+        return function (data) {
+            return {
+                originalSights: lookupByDistance(sightsTable[data.trajectory], data.distance),
+                derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], data.distance)
+            }
+        }
     }).factory('lookupByDistance', function () {
         return function (table, distance) {
             error = Infinity;
