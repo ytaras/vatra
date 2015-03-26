@@ -1,4 +1,4 @@
-angular.module('WeatherApp.services.Cordova', [])
+angular.module('Vatra.services.Cordova', [])
 
 .factory('deviceReady', function(){
   return function(done) {
