@@ -5,5 +5,7 @@ angular.module('Vatra', [
 ])
 
 .config(function($routeProvider) {
-  $routeProvider.when('/', {templateUrl:'home.html',  reloadOnSearch: false});
+  $routeProvider
+    .when('/', {redirectTo: '/input'})
+    .when('/input', {templateUrl:'input.html',  reloadOnSearch: false});
 });
