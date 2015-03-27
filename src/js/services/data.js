@@ -11,6 +11,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
         }
     }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
                                          temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,
+                                         thinFork, distanceChangePer1M, flightTime,
                                          forwardWindAdjustment, lookupByDistance) {
         return function (data) {
             var windDirection = clockToRadian(data.windDirection);
@@ -37,6 +38,9 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
                 temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[trajectory], data.distance) * normTemperature / 10,
                 pressureAdjustment: lookupByDistance(pressureAdjustment[trajectory], data.distance) * normPressure / 10,
                 angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
+                thinFork: lookupByDistance(thinFork[trajectory], data.distance),
+                distanceChangePer1M: lookupByDistance(distanceChangePer1M[trajectory], data.distance),
+                flightTime: lookupByDistance(flightTime[trajectory], data.distance),
                 windInRadians: windDirection,
                 forwardWind: forwardWind,
                 sideWind: sideWind,
