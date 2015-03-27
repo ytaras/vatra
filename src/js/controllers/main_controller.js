@@ -2,8 +2,8 @@ angular.module('Vatra.controllers.Main', [
     'Vatra.services.Data'
 ]).controller('MainController', function ($scope, grenadesConsumption, sightsValues) {
     $scope.types = [
-        {label: 'Точечна', value: 'single'},
-        {label: 'Площинна', value: 'extended'}
+        {label: 'Точечна (до 15х15)', value: 'single'},
+        {label: 'Площинна (понад 15х15)', value: 'extended'}
     ];
     $scope.trajectories = [
         {label: 'Настильна', value: 'flat'},
