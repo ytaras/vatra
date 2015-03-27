@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputDistance" class="col-sm-2 control-label">Відстань</label>
+                <label for="inputDistance" class="col-sm-2 control-label">Дальність</label>
 
                 <div class="col-sm-10">
                     <input type="number" class="form-control" id="inputDistance" ng-model="data.distance" required>
@@ -124,16 +124,16 @@
             <div class="panel-body">
                 <p>Приціл: {{ result.sights.adjustedSights }}</p>
 
-                <p>Поправка напрямку {{ result.sights.sideAdjustment }} тис.</p>
+                <p>Поправка напрямку {{ result.sights.sideAdjustment | number: 2 }} тис.</p>
 
-                <p>Фронт для 1 АГС {{ result.sights.oneDeviceFront }} тис</p>
+                <p>Фронт для 1 АГС {{ result.sights.oneDeviceFront | number: 2 }} тис</p>
 
                 <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
-                    result.sights.frontDispersal }} тис</p>
+                    result.sights.frontDispersal | number: 2 }} тис</p>
 
-                <p ng-show="showFan()">Віяло: {{ result.sights.fan }} тис</p>
+                <p ng-show="showFan()">Віяло: {{ result.sights.fan | number: 2 }} тис</p>
 
-                <p>Розхід по {{ result.grenades.grenadesPerDevice }} гран/АГС</p>
+                <p>Розхід по {{ result.grenades.grenadesPerDevice | number: 0 }} гран/АГС</p>
 
                 <p>Вузька вилка {{ result.sights.thinFork }}</p>
 

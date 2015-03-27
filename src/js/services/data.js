@@ -4,6 +4,8 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             var dictionary;
             var result = {};
             var isPoint = (data.type == 'single') || (data.front <= 15 && data.depth <= 15);
+            // TODO: For 500 use (400C + 600C)/2
+            // TODO: For 300 use (400C)
             if (isPoint) {
                 dictionary = singleTargetGrenadeConsumption[data.task];
                 result.totalGrenades = lookupByDistance(dictionary, data.distance);
@@ -51,7 +53,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
                 forwardWind: forwardWind,
                 sideWind: sideWind,
                 normalizedPressure: normPressure,
-                oneDeviceFront: ((data.front * 100) / (data.distance * data.devicesNumber)),
+                oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
                 fan: (data.front - data.interval) * 10 / (data.distance * 2)
             };
