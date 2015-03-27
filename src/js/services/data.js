@@ -1,13 +1,19 @@
 angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
-    .factory('grenadesConsumptionCoefficient', function (lookupByDistance, singleTargetGrenadeConsumption, groupTargetGrenadeConsumption) {
+    .factory('grenadesConsumption', function (lookupByDistance, singleTargetGrenadeConsumption, groupTargetGrenadeConsumption) {
         return function (data) {
             var dictionary;
-            if (data.type.value == 'single') {
+            var result = {};
+            var isPoint = (data.type == 'single') || (data.front <= 15 && data.depth <= 15);
+            if (isPoint) {
                 dictionary = singleTargetGrenadeConsumption[data.task];
+                result.totalGrenades = lookupByDistance(dictionary, data.distance);
             } else {
                 dictionary = groupTargetGrenadeConsumption[data.trajectory][data.task];
+                result.grenadesCoeffitient = lookupByDistance(dictionary, data.distance);
+                result.totalGrenades = (result.grenadesCoeffitient * data.front * data.depth) / 100;
             }
-            return lookupByDistance(dictionary, data.distance)
+            result.grenadesPerDevice = result.totalGrenades / data.devicesNumber;
+            return result;
         }
     }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
                                          temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,

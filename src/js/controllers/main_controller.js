@@ -1,8 +1,8 @@
 angular.module('Vatra.controllers.Main', [
     'Vatra.services.Data'
-]).controller('MainController', function ($scope, grenadesConsumptionCoefficient, sightsValues) {
+]).controller('MainController', function ($scope, grenadesConsumption, sightsValues) {
     $scope.types = [
-        {label: 'Одиночна', value: 'single'},
+        {label: 'Точечна', value: 'single'},
         {label: 'Площинна', value: 'extended'}
     ];
     $scope.trajectories = [
@@ -44,9 +44,7 @@ angular.module('Vatra.controllers.Main', [
 
         $scope.count = function (data) {
             var result = {};
-            result.grenadesCoeffitient = grenadesConsumptionCoefficient(data);
-            result.totalGrenades = (result.grenadesCoeffitient * data.front * data.depth) / 100;
-            result.grenadesPerDevice = result.totalGrenades / data.devicesNumber;
+            result.grenades = grenadesConsumption(data);
             result.sights = sightsValues(data);
             $scope.result = result;
         };

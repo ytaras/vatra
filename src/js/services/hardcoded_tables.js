@@ -1,7 +1,7 @@
 angular.module('Vatra.services.HardcodedTables', [])
     .factory('singleTargetGrenadeConsumption', function () {
         return {
-            destroy: {
+            supress: {
                 400: 4,
                 600: 6,
                 800: 8,
@@ -10,7 +10,7 @@ angular.module('Vatra.services.HardcodedTables', [])
                 1400: 13,
                 1600: 15
             },
-            supress: {
+            destroy: {
                 400: 6,
                 600: 9,
                 800: 12,
