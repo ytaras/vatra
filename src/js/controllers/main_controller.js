@@ -19,6 +19,14 @@ angular.module('Vatra.controllers.Main', [
         {label: '2', value: 2}
     ];
 
+    $scope.showFrontDispersal = function () {
+        return $scope.data.front > 20;
+    };
+
+    $scope.showFan = function () {
+        return $scope.showFrontDispersal() && $scope.data.devicesNumber == 2;
+    };
+
     $scope.data = {
             devicesNumber: 2,
             type: 'single',
@@ -29,7 +37,8 @@ angular.module('Vatra.controllers.Main', [
         depth: 20,
         windSpeed: 0,
         temperature: 15,
-        windDirection: 12
+        windDirection: 12,
+        interval: 15
         };
         $scope.result = {};
 
