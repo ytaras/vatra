@@ -38,14 +38,16 @@
                 <label for="inputFront" class="col-sm-2 control-label">Фронт</label>
 
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputFront" ng-model="data.front" required>
+                    <input type="number" class="form-control" id="inputFront"
+                           ng-disabled="singleTarget()" ng-model="data.front" required>
                 </div>
             </div>
             <div class="form-group">
                 <label for="inputDepth" class="col-sm-2 control-label">Глибина</label>
 
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputDepth" ng-model="data.depth" required>
+                    <input type="number" class="form-control" id="inputDepth"
+                           ng-disabled="singleTarget()" ng-model="data.depth" required>
                 </div>
             </div>
             <div class="form-group">
@@ -59,7 +61,6 @@
             </div>
             <div class="form-group">
                 <label for="inputTask" class="col-sm-2 control-label">Задача</label>
-
                 <div class="col-sm-10">
                     <select class="form-control" id="inputTask" ng-model="data.task"
                             ng-options="t.value as t.label for t in tasks" required>

@@ -27,6 +27,10 @@ angular.module('Vatra.controllers.Main', [
         return $scope.showFrontDispersal() && $scope.data.devicesNumber == 2;
     };
 
+    $scope.singleTarget = function () {
+        return $scope.data.type == 'single';
+    };
+
     $scope.data = {
         devicesNumber: 1,
             type: 'single',
