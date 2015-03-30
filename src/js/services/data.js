@@ -65,7 +65,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             result.adjustedSights = result.originalSights + result.forwardWindAdjustment
             + result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment + result.pressureAdjustment
             + result.angleAdjustment;
-            result.sideAdjustment = result.sideWindAdjustment + result.derivationAdjustment;
+            result.sideAdjustment = (result.sideWindAdjustment + result.derivationAdjustment) * 0.01;
         }
     }).factory('clockToRadian', function () {
         return function (clock) {

@@ -28,17 +28,19 @@ angular.module('Vatra.controllers.Main', [
     };
 
     $scope.data = {
-            devicesNumber: 2,
+        devicesNumber: 1,
             type: 'single',
             trajectory: 'flat',
         task: 'supress',
             distance: 400,
-            front: 20,
-        depth: 20,
+        front: 15,
+        depth: 15,
         windSpeed: 0,
         temperature: 15,
         windDirection: 12,
-        interval: 15
+        interval: 15,
+        positionElevation: 100,
+        targetElevation: 100
         };
         $scope.result = {};
 
