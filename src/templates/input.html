@@ -1,119 +1,78 @@
 <section class="section scrollable">
     <div class="scrollable-content">
-        <form class="form-horizontal" ng-submit="count(data)">
+        <form class="" ng-submit="count(data)">
             <h2>Ціль</h2>
 
             <div class="form-group">
-                <label for="inputType" class="col-sm-2 control-label">Xaрактер</label>
-
-                <div class="col-sm-10">
-                    <select class="form-control" id="inputType" ng-model="data.type"
-                            ng-options="t.value as t.label for t in types">
-                    </select>
-                </div>
+                <label for="inputType" class="control-label">Xaрактер</label>
+                <select class="form-control" id="inputType" ng-model="data.type"
+                        ng-options="t.value as t.label for t in types">
+                </select>
             </div>
             <div class="form-group">
-                <label for="inputTarget" class="col-sm-2 control-label">Ціль</label>
-
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputTarget">
-                </div>
+                <label for="inputTarget" class="control-label">Ціль</label>
+                <input type="text" class="form-control" id="inputTarget">
             </div>
             <div class="form-group">
-                <label for="inputDistance" class="col-sm-2 control-label">Дальність</label>
-
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputDistance" ng-model="data.distance" required>
-                </div>
+                <label for="inputDistance" class="control-label">Дальність</label>
+                <input type="number" class="form-control" id="inputDistance" ng-model="data.distance" required>
             </div>
             <div class="form-group">
-                <label for="inputElevation" class="col-sm-2 control-label">Висота</label>
-
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputElevation" ng-model="data.targetElevation"
-                           required>
-                </div>
+                <label for="inputElevation" class="control-label">Висота</label>
+                <input type="number" class="form-control" id="inputElevation" ng-model="data.targetElevation"
+                       required>
             </div>
             <div class="form-group">
-                <label for="inputFront" class="col-sm-2 control-label">Фронт</label>
-
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputFront"
-                           ng-disabled="singleTarget()" ng-model="data.front" required>
-                </div>
+                <label for="inputFront" class="control-label">Фронт</label>
+                <input type="number" class="form-control" id="inputFront"
+                       ng-disabled="singleTarget()" ng-model="data.front" required>
             </div>
             <div class="form-group">
-                <label for="inputDepth" class="col-sm-2 control-label">Глибина</label>
+                <label for="inputDepth" class="control-label">Глибина</label>
+                <input type="number" class="form-control" id="inputDepth"
+                       ng-disabled="singleTarget()" ng-model="data.depth" required>
+            </div>
 
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputDepth"
-                           ng-disabled="singleTarget()" ng-model="data.depth" required>
-                </div>
+            <div class="form-group">
+                <label for="inputTrajectory" class="control-label">Траекторія</label>
+                <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
+                        ng-options="t.value as t.label for t in trajectories">
+                </select>
             </div>
             <div class="form-group">
-                <label for="inputTrajectory" class="col-sm-2 control-label">Траекторія</label>
-
-                <div class="col-sm-10">
-                    <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
-                            ng-options="t.value as t.label for t in trajectories">
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputTask" class="col-sm-2 control-label">Задача</label>
-
-                <div class="col-sm-10">
-                    <select class="form-control" id="inputTask" ng-model="data.task"
-                            ng-options="t.value as t.label for t in tasks" required>
-                    </select>
-                </div>
+                <label for="inputTask" class="control-label">Задача</label>
+                <select class="form-control" id="inputTask" ng-model="data.task"
+                        ng-options="t.value as t.label for t in tasks" required>
+                </select>
             </div>
             <h2>Вогнева позиція</h2>
 
             <div class="form-group">
-                <label for="inputPositionHeight" class="col-sm-2 control-label">Висота</label>
-
-                <div class="col-sm-10">
-                    <input type="number" class="form-control" id="inputPositionHeight"
-                           ng-model="data.positionElevation" required>
-                </div>
+                <label for="inputPositionHeight" class="control-label">Висота</label>
+                <input type="number" class="form-control" id="inputPositionHeight"
+                       ng-model="data.positionElevation" required>
             </div>
             <div class="form-group">
-                <label for="inputDevicesNumber" class="col-sm-2 control-label">Кількість гранатометів</label>
-
-                <div class="col-sm-10">
+                <label for="inputDevicesNumber" class="control-label">Кількість гранатометів</label>
                     <select class="form-control" id="inputDevicesNumber" ng-model="data.devicesNumber"
                             ng-options="t.value as t.label for t in counts" required>
                     </select>
-                </div>
             </div>
             <div class="form-group">
-                <label for="inputDevicesInterval" class="col-sm-2 control-label">Інтервал</label>
-
-                <div class="col-sm-10">
+                <label for="inputDevicesInterval" class="control-label">Інтервал</label>
                     <input type="number" class="form-control" id="inputDevicesInterval" ng-model="data.interval">
-                </div>
             </div>
             <div class="form-group">
-                <label for="inputTemperature" class="col-sm-2 control-label">Температура повітря</label>
-
-                <div class="col-sm-10">
+                <label for="inputTemperature" class="control-label">Температура повітря</label>
                     <input type="number" class="form-control" id="inputTemperature" ng-model="data.temperature">
-                </div>
             </div>
             <div class="form-group">
-                <label for="inputWindDirection" class="col-sm-2 control-label">Кут вітру (по годиннику)</label>
-
-                <div class="col-sm-10">
+                <label for="inputWindDirection" class="control-label">Кут вітру (по годиннику)</label>
                     <input type="number" class="form-control" id="inputWindDirection" ng-model="data.windDirection">
-                </div>
             </div>
             <div class="form-group">
-                <label for="inputWindSpeed" class="col-sm-2 control-label">Швидкість вітру м/c</label>
-
-                <div class="col-sm-10">
+                <label for="inputWindSpeed" class="control-label">Швидкість вітру м/c</label>
                     <input type="number" class="form-control" id="inputWindSpeed" ng-model="data.windSpeed">
-                </div>
             </div>
             <button type="submit" class="btn btn-default">Розрахувати</button>
         </form>
