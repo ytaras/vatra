@@ -1,6 +1,6 @@
 angular.module('Vatra.controllers.Main', [
     'Vatra.services.Data'
-]).controller('MainController', function ($scope, grenadesConsumption, sightsValues) {
+]).controller('MainController', function ($scope, calculateSights) {
     $scope.types = [
         {label: 'Точечна (до 15х15)', value: 'single'},
         {label: 'Площинна (понад 15х15)', value: 'extended'}
@@ -54,9 +54,6 @@ angular.module('Vatra.controllers.Main', [
     $scope.result = {};
 
     $scope.count = function (data) {
-        var result = {};
-        result.grenades = grenadesConsumption(data);
-        result.sights = sightsValues(data);
-        $scope.result = result;
+        $scope.result = calculateSights(data);
     };
 });

@@ -1,4 +1,4 @@
-angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
+angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.services.TableFunctions'])
     .factory('grenadesConsumption', function (singleTargetGrenadeConsumption, groupTargetGrenadeConsumption, averageByDistance) {
         return function (data) {
             var dictionary;
@@ -15,10 +15,17 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             result.grenadesPerDevice = result.totalGrenades / data.devicesNumber;
             return result;
         }
-    }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
-                                         temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,
-                                         thinFork, distanceChangePer1M, flightTime,
-                                         forwardWindAdjustment, lookupByDistance, adjustSights) {
+    }).factory('calculateSights', function (grenadesConsumption, meteoAdjustments, sightsValues) {
+        return function (data) {
+            var result = {};
+            result.grenadesConsumption = grenadesConsumption(data);
+            result.meteoAdjustments = meteoAdjustments(data);
+            result.sights = sightsValues(data, result.meteoAdjustments);
+            return result;
+        }
+    }).factory('meteoAdjustments', function (forwardWindAdjustment, sideWindAdjustment, pressureAdjustment,
+                                             temperatureOfAirAdjustment, temperatureOfShellAdjustment, clockToRadian,
+                                             lookupByDistance) {
         return function (data) {
             var windDirection = clockToRadian(data.windDirection);
             var forwardWind = Math.cos(windDirection) * data.windSpeed;
@@ -28,29 +35,38 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             if (normPressure < 0) {
                 normPressure = 0
             }
-            var angleSign = 0;
-            var trajectory = data.trajectory;
-            if (trajectory == 'flat') {
-                angleSign = 1;
-            } else if (trajectory == 'hover') {
-                angleSign = -1;
-            }
             var result = {
-                originalSights: lookupByDistance(sightsTable[trajectory], data.distance),
-                derivationAdjustment: lookupByDistance(derivationAdjustments[trajectory], data.distance),
-                sideWindAdjustment: -lookupByDistance(sideWindAdjustment[trajectory], data.distance) * sideWind / 10,
-                forwardWindAdjustment: -lookupByDistance(forwardWindAdjustment[trajectory], data.distance) * forwardWind / 10,
-                temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[trajectory], data.distance) * normTemperature / 10,
-                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[trajectory], data.distance) * normTemperature / 10,
-                pressureAdjustment: lookupByDistance(pressureAdjustment[trajectory], data.distance) * normPressure / 10,
-                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
-                thinFork: lookupByDistance(thinFork[trajectory], data.distance),
-                distanceChangePer1M: lookupByDistance(distanceChangePer1M[trajectory], data.distance),
-                flightTime: lookupByDistance(flightTime[trajectory], data.distance),
-                windInRadians: windDirection,
                 forwardWind: forwardWind,
                 sideWind: sideWind,
-                normalizedPressure: normPressure,
+                forwardWindAdjustment: -lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10,
+                sideWindAdjustment: -lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10,
+                pressureAdjustment: lookupByDistance(pressureAdjustment[data.trajectory], data.distance) * normPressure / 10,
+                temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory], data.distance) * normTemperature / 10,
+                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10,
+            };
+            result.effectiveDistance = data.distance + result.forwardWindAdjustment + result.pressureAdjustment +
+            result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment;
+            return result;
+        }
+    }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
+                                         temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,
+                                         thinFork, distanceChangePer1M, flightTime,
+                                         forwardWindAdjustment, lookupByDistance, adjustSights) {
+        return function (data, meteoAdjustments) {
+            var angleSign = 0;
+            if (data.trajectory == 'flat') {
+                angleSign = 1;
+            } else if (data.trajectory == 'hover') {
+                angleSign = -1;
+            }
+
+            var result = {
+                originalSights: lookupByDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance),
+                derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], meteoAdjustments.effectiveDistance),
+                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
+                thinFork: lookupByDistance(thinFork[data.trajectory], meteoAdjustments.effectiveDistance),
+                distanceChangePer1M: lookupByDistance(distanceChangePer1M[data.trajectory], data.distance),
+                flightTime: lookupByDistance(flightTime[data.trajectory], data.distance),
                 oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
                 fan: (data.front - data.interval) * 10 / (data.distance * 2)
@@ -69,42 +85,5 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
         return function (clock) {
             var degrees = (clock % 12) * 30;
             return degrees * (Math.PI / 180);
-        }
-    }).factory('averageByDistance', function () {
-        return function (table, distance) {
-            var availableDistances = _.map(_.keys(table), function (k) {
-                return k * 1
-            });
-            var partitioned = _.partition(availableDistances, function (key) {
-                return key < distance;
-            });
-            var distancesLessThen = _.sortBy(partitioned[0], _.identity());
-            var distancesGreaterThen = _.sortBy(partitioned[1], _.identity());
-            if (_.isEmpty(distancesLessThen)) {
-                return table[distancesGreaterThen[0]];
-            }
-            if (_.isEmpty(distancesGreaterThen)) {
-                return table[_.last(distancesLessThen)]
-            }
-            var closestLess = _.last(distancesLessThen);
-            var closestGreater = distancesGreaterThen[0];
-            var delta = closestGreater - closestLess;
-            var greaterCoef = (distance - closestLess) / delta;
-            var lessCoef = (closestGreater - distance) / delta;
-            return lessCoef * table[closestLess] + greaterCoef * table[closestGreater];
-        }
-    }).factory('lookupByDistance', function () {
-        return function (table, distance) {
-            var error = Infinity;
-            var currentError;
-            var key;
-            for (var currentKey in table) {
-                currentError = Math.abs(currentKey - distance);
-                if (currentError < error) {
-                    error = currentError;
-                    key = currentKey;
-                }
-            }
-            return table[key];
         }
     });
