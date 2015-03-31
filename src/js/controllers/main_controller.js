@@ -38,10 +38,10 @@ angular.module('Vatra.controllers.Main', [
 
     $scope.data = {
         devicesNumber: 1,
-            type: 'single',
-            trajectory: 'flat',
+        type: 'single',
+        trajectory: 'flat',
         task: 'supress',
-            distance: 400,
+        distance: 400,
         front: 15,
         depth: 15,
         windSpeed: 0,
@@ -50,13 +50,13 @@ angular.module('Vatra.controllers.Main', [
         interval: 15,
         positionElevation: 100,
         targetElevation: 100
-        };
-        $scope.result = {};
+    };
+    $scope.result = {};
 
-        $scope.count = function (data) {
-            var result = {};
-            result.grenades = grenadesConsumption(data);
-            result.sights = sightsValues(data);
-            $scope.result = result;
-        };
-    });
+    $scope.count = function (data) {
+        var result = {};
+        result.grenades = grenadesConsumption(data);
+        result.sights = sightsValues(data);
+        $scope.result = result;
+    };
+});
