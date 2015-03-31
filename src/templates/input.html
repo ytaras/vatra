@@ -94,7 +94,7 @@
 
                 <p ng-show="showFan()">Віяло: {{ result.sights.fan | number: 2 }} тис</p>
 
-                <p>Розхід по {{ result.grenades.grenadesPerDevice | number: 0 }} гран/АГС</p>
+                <p>Розхід по {{ result.grenadesConsumption.grenadesPerDevice | number: 0 }} гран/АГС</p>
 
                 <p>Вузька вилка {{ result.sights.thinFork }}</p>
 
@@ -110,35 +110,51 @@
                 </h4>
             </div>
             <div class="panel-body">
-                <p>Приціл з таблиці на дальність {{ data.distance }}: {{ result.sights.originalSights }}</p>
+                <p>Вектор вітру по напрямку стрільби: {{ result.meteoAdjustments.forwardWind }} м/с</p>
 
-                <p>Вектор вітру по напрямку стрільби: {{ result.sights.forwardWind }} м/с</p>
+                <p>Поправка на вітер (дистанція {{ data.distance }}): {{
+                    result.meteoAdjustments.forwardWindAdjustment }}</p>
 
-                <p>Поправка на вітер (з таблиці на дальність {{ data.distance }}): {{
-                    result.sights.forwardWindAdjustment }}</p>
+                <p>Поправка на температуру повітря і зарядів (дистанція {{ data.distance }}): {{
+                    result.meteoAdjustments.temperatureOfAirAdjustment }} + {{
+                    result.meteoAdjustments.temperatureOfShellAdjustment }}</p>
 
-                <p>Поправка на температуру повітря і зарядів: {{ result.sights.temperatureOfAirAdjustment }} + {{
-                    result.sights.temperatureOfShellAdjustment }}</p>
+                <p>Поправка на тиск (дистанція {{ data.distance }}): {{ result.meteoAdjustments.pressureAdjustment
+                    }}</p>
 
-                <p>Поправка на тиск: {{ result.sights.pressureAdjustment }}</p>
+                <p>Ефективна дистанція (топографічна + метеопоправки): {{ result.meteoAdjustments.effectiveDistance
+                    }}</p>
 
-                <p>Поправка на перевищення (кут): {{ result.sights.angleAdjustment }}</p>
+                <p>Поправка на перевищення (кут, використовується ефективна дальність {{
+                    result.meteoAdjustments.effectiveDistance }}): {{ result.sights.angleAdjustment }}</p>
 
-                <p>Сума поправок (повинна дорівнювати значенню прицілу в панелі результатів):
-                    {{ result.sights.originalSights + result.sights.forwardWindAdjustment
-                    + result.sights.temperatureOfAirAdjustment + result.sights.temperatureOfShellAdjustment
-                    + result.sights.pressureAdjustment + result.sights.angleAdjustment }}</p>
+                <p>Маю сумніви щодо поправки на перевищення - треба розраховувати відносно {{ data.distance }} чи {{
+                    result.meteoAdjustments.effectiveDistance }} </p>
+
+                <p>Приціл з таблиці для дистанції {{ result.meteoAdjustments.effectiveDistance }}: {{
+                    result.sights.originalSights }}</p>
+
+                <p>Результат прицілювання - рахується як приціл з таблиці для ефективної дистанції + поправка на
+                    перевищення:
+                    {{ result.sights.originalSights + result.sights.angleAdjustment }}</p>
 
                 <p>Вектор вітру поперечний до напрямку стрільби (якщо на 3 годину - плюс, на 9 - мінус): {{
-                    result.sights.sideWind }} </p>
+                    result.meteoAdjustments.sideWind }} </p>
 
                 <p>Поправка на боковий вітер (з таблиці на дальність {{ data.distance }}): {{
-                    result.sights.sideWindAdjustment }}</p>
+                    result.meteoAdjustments.sideWindAdjustment }}</p>
 
-                <p>Поправка на деривацію: {{ result.sights.derivationAdjustment }}</p>
+                <p>Поправка на деривацію (для {{result.meteoAdjustments.effectiveDistance}}): {{
+                    result.sights.derivationAdjustment }}</p>
 
-                <p>Сума поправок (повинна дорівнювати значенню поправки напрямку в панелі результатів):
-                    {{ result.sights.sideWindAdjustment+ result.sights.derivationAdjustment }} / 100</p>
+                <p>Сума бокових поправок (повинна дорівнювати значенню поправки напрямку в панелі результатів):
+                    {{ result.sights.sideWindAdjustment + result.sights.derivationAdjustment }} / 100</p>
+
+                <p>Для розрахунку вузької вилки використовується топодистанція, а не ефективна</p>
+
+                <p>Дельта Х береться відносно ефективної дистанції, а не топо</p>
+
+                <p>Час польоту береться відносно ефективної дистанції</p>
                 <pre>
 {{ data | json }}
 {{ result | json }}

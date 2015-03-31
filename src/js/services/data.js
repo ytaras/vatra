@@ -42,7 +42,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 sideWindAdjustment: -lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10,
                 pressureAdjustment: lookupByDistance(pressureAdjustment[data.trajectory], data.distance) * normPressure / 10,
                 temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory], data.distance) * normTemperature / 10,
-                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10,
+                temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory], data.distance) * normTemperature / 10
             };
             result.effectiveDistance = data.distance + result.forwardWindAdjustment + result.pressureAdjustment +
             result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment;
@@ -51,7 +51,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
     }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
                                          temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,
                                          thinFork, distanceChangePer1M, flightTime,
-                                         forwardWindAdjustment, lookupByDistance, adjustSights) {
+                                         forwardWindAdjustment, lookupByDistance) {
         return function (data, meteoAdjustments) {
             var angleSign = 0;
             if (data.trajectory == 'flat') {
@@ -63,23 +63,18 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             var result = {
                 originalSights: lookupByDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance),
                 derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], meteoAdjustments.effectiveDistance),
-                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
-                thinFork: lookupByDistance(thinFork[data.trajectory], meteoAdjustments.effectiveDistance),
-                distanceChangePer1M: lookupByDistance(distanceChangePer1M[data.trajectory], data.distance),
-                flightTime: lookupByDistance(flightTime[data.trajectory], data.distance),
+                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / meteoAdjustments.effectiveDistance * angleSign,
+                // TODO: Verify which distance should be used in following formulas:
+                thinFork: lookupByDistance(thinFork[data.trajectory], data.distance),
+                distanceChangePer1M: lookupByDistance(distanceChangePer1M[data.trajectory], meteoAdjustments.effectiveDistance),
+                flightTime: lookupByDistance(flightTime[data.trajectory], meteoAdjustments.effectiveDistance),
                 oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
                 fan: (data.front - data.interval) * 10 / (data.distance * 2)
             };
-            adjustSights(result);
+            result.adjustedSights = result.originalSights + result.angleAdjustment;
+            result.sideAdjustment = (meteoAdjustments.sideWindAdjustment + result.derivationAdjustment) * 0.01;
             return result;
-        }
-    }).factory('adjustSights', function () {
-        return function (result) {
-            result.adjustedSights = result.originalSights + result.forwardWindAdjustment
-            + result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment + result.pressureAdjustment
-            + result.angleAdjustment;
-            result.sideAdjustment = (result.sideWindAdjustment + result.derivationAdjustment) * 0.01;
         }
     }).factory('clockToRadian', function () {
         return function (clock) {
