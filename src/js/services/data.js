@@ -1,17 +1,15 @@
 angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
-    .factory('grenadesConsumption', function (lookupByDistance, singleTargetGrenadeConsumption, groupTargetGrenadeConsumption) {
+    .factory('grenadesConsumption', function (singleTargetGrenadeConsumption, groupTargetGrenadeConsumption, averageByDistance) {
         return function (data) {
             var dictionary;
             var result = {};
             var isPoint = (data.type == 'single') || (data.front <= 15 && data.depth <= 15);
-            // TODO: For 500 use (400C + 600C)/2
-            // TODO: For 300 use (400C)
             if (isPoint) {
                 dictionary = singleTargetGrenadeConsumption[data.task];
-                result.totalGrenades = lookupByDistance(dictionary, data.distance);
+                result.totalGrenades = averageByDistance(dictionary, data.distance);
             } else {
                 dictionary = groupTargetGrenadeConsumption[data.trajectory][data.task];
-                result.grenadesCoeffitient = lookupByDistance(dictionary, data.distance);
+                result.grenadesCoeffitient = averageByDistance(dictionary, data.distance);
                 result.totalGrenades = (result.grenadesCoeffitient * data.front * data.depth) / 100;
             }
             result.grenadesPerDevice = result.totalGrenades / data.devicesNumber;
@@ -71,6 +69,29 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
         return function (clock) {
             var degrees = (clock % 12) * 30;
             return degrees * (Math.PI / 180);
+        }
+    }).factory('averageByDistance', function () {
+        return function (table, distance) {
+            var availableDistances = _.map(_.keys(table), function (k) {
+                return k * 1
+            });
+            var partitioned = _.partition(availableDistances, function (key) {
+                return key < distance;
+            });
+            var distancesLessThen = _.sortBy(partitioned[0], _.identity());
+            var distancesGreaterThen = _.sortBy(partitioned[1], _.identity());
+            if (_.isEmpty(distancesLessThen)) {
+                return table[distancesGreaterThen[0]];
+            }
+            if (_.isEmpty(distancesGreaterThen)) {
+                return table[_.last(distancesLessThen)]
+            }
+            var closestLess = _.last(distancesLessThen);
+            var closestGreater = distancesGreaterThen[0];
+            var delta = closestGreater - closestLess;
+            var greaterCoef = (distance - closestLess) / delta;
+            var lessCoef = (closestGreater - distance) / delta;
+            return lessCoef * table[closestLess] + greaterCoef * table[closestGreater];
         }
     }).factory('lookupByDistance', function () {
         return function (table, distance) {
