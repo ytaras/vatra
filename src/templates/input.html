@@ -116,7 +116,7 @@
             </div>
             <button type="submit" class="btn btn-default">Розрахувати</button>
         </form>
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="calculated()">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     Результат
@@ -143,13 +143,43 @@
                 <p>Час польоту {{ result.sights.flightTime }} с</p>
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default" ng-show="calculated()">
             <div class="panel-heading">
                 <h4 class="panel-title">
                     Відладочна інформація
                 </h4>
             </div>
-            <div class="panel-body"> <pre>
+            <div class="panel-body">
+                <p>Приціл з таблиці на дальність {{ data.distance }}: {{ result.sights.originalSights }}</p>
+
+                <p>Вектор вітру по напрямку стрільби: {{ result.sights.forwardWind }} м/с</p>
+
+                <p>Поправка на вітер (з таблиці на дальність {{ data.distance }}): {{
+                    result.sights.forwardWindAdjustment }}</p>
+
+                <p>Поправка на температуру повітря і зарядів: {{ result.sights.temperatureOfAirAdjustment }} + {{
+                    result.sights.temperatureOfShellAdjustment }}</p>
+
+                <p>Поправка на тиск: {{ result.sights.pressureAdjustment }}</p>
+
+                <p>Поправка на перевищення (кут): {{ result.sights.angleAdjustment }}</p>
+
+                <p>Сума поправок (повинна дорівнювати значенню прицілу в панелі результатів):
+                    {{ result.sights.originalSights + result.sights.forwardWindAdjustment
+                    + result.sights.temperatureOfAirAdjustment + result.sights.temperatureOfShellAdjustment
+                    + result.sights.pressureAdjustment + result.sights.angleAdjustment }}</p>
+
+                <p>Вектор вітру поперечний до напрямку стрільби (якщо на 3 годину - плюс, на 9 - мінус): {{
+                    result.sights.sideWind }} </p>
+
+                <p>Поправка на боковий вітер (з таблиці на дальність {{ data.distance }}): {{
+                    result.sights.sideWindAdjustment }}</p>
+
+                <p>Поправка на деривацію: {{ result.sights.derivationAdjustment }}</p>
+
+                <p>Сума поправок (повинна дорівнювати значенню поправки напрямку в панелі результатів):
+                    {{ result.sights.sideWindAdjustment+ result.sights.derivationAdjustment }} / 100</p>
+                <pre>
 {{ data | json }}
 {{ result | json }}
   </pre>

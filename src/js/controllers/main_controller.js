@@ -31,6 +31,11 @@ angular.module('Vatra.controllers.Main', [
         return $scope.data.type == 'single';
     };
 
+    $scope.calculated = function () {
+        return !(_.isEmpty($scope.result))
+    };
+
+
     $scope.data = {
         devicesNumber: 1,
             type: 'single',

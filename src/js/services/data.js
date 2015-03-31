@@ -40,8 +40,8 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables'])
             var result = {
                 originalSights: lookupByDistance(sightsTable[trajectory], data.distance),
                 derivationAdjustment: lookupByDistance(derivationAdjustments[trajectory], data.distance),
-                sideWindAdjustment: lookupByDistance(sideWindAdjustment[trajectory], data.distance) * sideWind / 10,
-                forwardWindAdjustment: lookupByDistance(forwardWindAdjustment[trajectory], data.distance) * forwardWind / 10,
+                sideWindAdjustment: -lookupByDistance(sideWindAdjustment[trajectory], data.distance) * sideWind / 10,
+                forwardWindAdjustment: -lookupByDistance(forwardWindAdjustment[trajectory], data.distance) * forwardWind / 10,
                 temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[trajectory], data.distance) * normTemperature / 10,
                 temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[trajectory], data.distance) * normTemperature / 10,
                 pressureAdjustment: lookupByDistance(pressureAdjustment[trajectory], data.distance) * normPressure / 10,
