@@ -48,10 +48,9 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment;
             return result;
         }
-    }).factory('sightsValues', function (sightsTable, derivationAdjustments, clockToRadian, sideWindAdjustment,
-                                         temperatureOfAirAdjustment, temperatureOfShellAdjustment, pressureAdjustment,
+    }).factory('sightsValues', function (sightsTable, derivationAdjustments,
                                          thinFork, distanceChangePer1M, flightTime,
-                                         forwardWindAdjustment, lookupByDistance) {
+                                         forwardWindAdjustment, lookupByDistance, lookupSupportDistance) {
         return function (data, meteoAdjustments) {
             var angleSign = 0;
             if (data.trajectory == 'flat') {
@@ -59,15 +58,22 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             } else if (data.trajectory == 'hover') {
                 angleSign = -1;
             }
-
+            var supportDistance = lookupSupportDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance);
+            var supportSights = sightsTable[data.trajectory][supportDistance];
+            var deltaX = distanceChangePer1M[data.trajectory][supportDistance];
+            var precisionAdjustment = angleSign * (meteoAdjustments.effectiveDistance - supportDistance) / deltaX;
             var result = {
-                originalSights: lookupByDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance),
-                derivationAdjustment: lookupByDistance(derivationAdjustments[data.trajectory], meteoAdjustments.effectiveDistance),
+                supportSights: supportSights,
+                supportDistance: supportDistance,
+                precisionAdjustment: precisionAdjustment,
+                originalSights: supportSights + precisionAdjustment,
+                derivationAdjustment: derivationAdjustments[data.trajectory][supportDistance],
                 angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / meteoAdjustments.effectiveDistance * angleSign,
+                supportDistance: supportDistance,
                 // TODO: Verify which distance should be used in following formulas:
                 thinFork: lookupByDistance(thinFork[data.trajectory], data.distance),
-                distanceChangePer1M: lookupByDistance(distanceChangePer1M[data.trajectory], meteoAdjustments.effectiveDistance),
-                flightTime: lookupByDistance(flightTime[data.trajectory], meteoAdjustments.effectiveDistance),
+                distanceChangePer1M: deltaX,
+                flightTime: flightTime[data.trajectory][supportDistance],
                 oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
                 fan: (data.front - data.interval) * 10 / (data.distance * 2)

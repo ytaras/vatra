@@ -131,10 +131,13 @@
                 <p>Маю сумніви щодо поправки на перевищення - треба розраховувати відносно {{ data.distance }} чи {{
                     result.meteoAdjustments.effectiveDistance }} </p>
 
-                <p>Приціл з таблиці для дистанції {{ result.meteoAdjustments.effectiveDistance }}: {{
-                    result.sights.originalSights }}</p>
+                <p>Приціл для опорної дальності {{ result.sights.supportDistance}}: {{ result.sights.supportSights
+                    }}</p>
 
-                <p>Результат прицілювання - рахується як приціл з таблиці для ефективної дистанції + поправка на
+                <p>Поправка на різницю з опорною дальністю: {{ result.sights.precisionAdjustment }}, поправлене значення
+                    прицілу: {{ result.sights.originalSights }} </p>
+
+                <p>Результат прицілювання - рахується як приціл + поправка на
                     перевищення:
                     {{ result.sights.originalSights + result.sights.angleAdjustment }}</p>
 

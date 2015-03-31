@@ -22,7 +22,7 @@ angular.module('Vatra.services.TableFunctions', [])
             var lessCoef = (closestGreater - distance) / delta;
             return lessCoef * table[closestLess] + greaterCoef * table[closestGreater];
         }
-    }).factory('lookupByDistance', function () {
+    }).factory('lookupSupportDistance', function () {
         return function (table, distance) {
             var error = Infinity;
             var currentError;
@@ -34,6 +34,10 @@ angular.module('Vatra.services.TableFunctions', [])
                     key = currentKey;
                 }
             }
-            return table[key];
+            return key;
+        }
+    }).factory('lookupByDistance', function (lookupSupportDistance) {
+        return function (table, distance) {
+            return table[lookupSupportDistance(table, distance)];
         }
     });
