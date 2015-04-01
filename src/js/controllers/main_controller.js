@@ -20,7 +20,7 @@ angular.module('Vatra.controllers.Main', [
     ];
 
     $scope.showFrontDispersal = function () {
-        return $scope.data.front > 20;
+        return $scope.type = 'extended' && $scope.data.front > 20;
     };
 
     $scope.showFan = function () {
