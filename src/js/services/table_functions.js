@@ -22,6 +22,12 @@ angular.module('Vatra.services.TableFunctions', [])
             var lessCoef = (closestGreater - distance) / delta;
             return lessCoef * table[closestLess] + greaterCoef * table[closestGreater];
         }
+    }).factory('findMinimalRow', function () {
+        return function (table, iterator) {
+            return _.min(_.pairs(table), function (row) {
+                return iterator(row[1])
+            })
+        }
     }).factory('lookupSupportDistance', function () {
         return function (table, distance) {
             var error = Infinity;

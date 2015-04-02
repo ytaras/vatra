@@ -15,13 +15,27 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             result.grenadesPerDevice = result.totalGrenades / data.devicesNumber;
             return result;
         }
-    }).factory('calculateSights', function (grenadesConsumption, meteoAdjustments, sightsValues) {
+    }).factory('calculateSights', function (grenadesConsumption, meteoAdjustments, sightsValues, calculateMinimalSights) {
         return function (data) {
             var result = {};
             result.grenadesConsumption = grenadesConsumption(data);
             result.meteoAdjustments = meteoAdjustments(data);
             result.sights = sightsValues(data, result.meteoAdjustments);
+            result.minimalSights = calculateMinimalSights(data);
             return result;
+        }
+    }).factory('calculateMinimalSights', function (minimalSightsForCrest, lookupByDistance, lookupSupportDistance, minimalDistanceForCrest) {
+        return function (data) {
+            if (!data.crestHeight || !data.crestDistance) {
+                return {}
+            }
+            var row = lookupByDistance(minimalSightsForCrest, data.crestDistance);
+            var crestSupportDistance = lookupSupportDistance(row, data.crestHeight);
+            return {
+                crestSupportDistance: crestSupportDistance,
+                minimalSights: row[crestSupportDistance],
+                minimalDistance: minimalDistanceForCrest[crestSupportDistance]
+            }
         }
     }).factory('meteoAdjustments', function (forwardWindAdjustment, sideWindAdjustment, pressureAdjustment,
                                              temperatureOfAirAdjustment, temperatureOfShellAdjustment, clockToRadian,
@@ -65,7 +79,6 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             var precisionAdjustment = angleSign * (meteoAdjustments.effectiveDistance - supportDistance) / deltaX;
             var result = {
                 supportSights: supportSights,
-                supportDistance: supportDistance,
                 precisionAdjustment: precisionAdjustment,
                 originalSights: supportSights + precisionAdjustment,
                 derivationAdjustment: derivationAdjustments[data.trajectory][topoSupportDistance],

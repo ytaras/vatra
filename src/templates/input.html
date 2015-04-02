@@ -74,6 +74,18 @@
                 <label for="inputWindSpeed" class="control-label">Швидкість вітру м/c</label>
                     <input type="number" class="form-control" id="inputWindSpeed" ng-model="data.windSpeed">
             </div>
+            <h2>Стрільба з закритої позиції</h2>
+
+            <div class="form-group">
+                <label for="crestHeight" class="control-label">Перевищення гребеня над ВП</label>
+                <input type="number" class="form-control" id="crestHeight"
+                       ng-model="data.crestHeight">
+            </div>
+            <div class="form-group">
+                <label for="crestDistance" class="control-label">Відстань до гребеня</label>
+                <input type="number" class="form-control" id="crestDistance"
+                       ng-model="data.crestDistance">
+            </div>
             <button type="submit" class="btn btn-default">Розрахувати</button>
         </form>
         <div class="panel panel-default" ng-show="calculated()">
@@ -103,6 +115,11 @@
                 <p>ΔX тис {{ result.sights.distanceChangePer1M }} м</p>
 
                 <p>Час польоту {{ result.sights.flightTime }} с</p>
+
+                <p ng-show="showMinimalSights()">Мінімальний приціл {{ result.minimalSights.minimalSights }}</p>
+
+                <p ng-show="showMinimalSights()">Мінімальна відстань до гребеня даної висоти {{
+                    result.minimalSights.minimalDistance }} м</p>
             </div>
         </div>
         <div class="panel panel-default" ng-show="calculated()">

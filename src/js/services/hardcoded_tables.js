@@ -1,4 +1,6 @@
-angular.module('Vatra.services.HardcodedTables', [])
+angular.module('Vatra.services.HardcodedTables', [
+    'Vatra.services.TableFunctions'
+])
     .factory('singleTargetGrenadeConsumption', function () {
         return {
             supress: {
@@ -582,6 +584,40 @@ angular.module('Vatra.services.HardcodedTables', [])
 
             }
         }
+    }).factory('minimalDistanceForCrest', function (findMinimalRow, minimalSightsForCrest) {
+        var availableDistances = _.keys(minimalSightsForCrest[_.head(_.keys(minimalSightsForCrest))]);
+        return _.object(_.map(availableDistances, function (distance) {
+            var row = findMinimalRow(minimalSightsForCrest, function (row) {
+                return row[distance];
+            });
+            return [distance, row[0]]
+        }));
+    }).factory('minimalSightsForCrest', function () {
+        var distances = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
+        var minimalSightsForCrestRaw = {
+            100: [580, 800, 900, 1140, 1260, 1370, 1460, 1540, 1600, 1640],
+            150: [545, 720, 820, 990, 1095, 1190, 1280, 1350, 1415, 1465],
+            200: [510, 640, 740, 840, 930, 1010, 1100, 1160, 1230, 1290],
+            250: [525, 635, 720, 810, 880, 955, 1030, 1085, 1145, 1200],
+            300: [540, 630, 700, 780, 830, 900, 960, 1010, 1060, 1110],
+            350: [575, 645, 710, 775, 825, 885, 940, 990, 1080, 1075],
+            400: [610, 660, 720, 770, 820, 870, 920, 970, 1100, 1040],
+            450: [650, 695, 745, 790, 835, 880, 925, 965, 1050, 1035],
+            500: [690, 730, 770, 810, 850, 890, 930, 960, 1000, 1030],
+            550: [735, 770, 805, 840, 880, 915, 950, 975, 1010, 1040],
+            600: [780, 810, 840, 870, 910, 940, 970, 990, 1020, 1050],
+            650: [825, 850, 885, 910, 940, 970, 995, 1015, 1045, 1070],
+            700: [870, 890, 930, 950, 970, 1000, 1020, 1040, 1070, 1090],
+            750: [920, 935, 970, 990, 1010, 1035, 1055, 1075, 1095, 1120],
+            800: [970, 980, 1010, 1030, 1050, 1070, 1090, 1110, 1120, 1150],
+            850: [1020, 1030, 1055, 1075, 1090, 1110, 1130, 1145, 1155, 1180],
+            900: [1070, 1080, 1100, 1120, 1130, 1150, 1170, 1180, 1190, 1210],
+            950: [1120, 1130, 1145, 1165, 1175, 1190, 1210, 1220, 1230, 1245],
+            1000: [1170, 1180, 1190, 1210, 1220, 1230, 1250, 1260, 1270, 1280]
+        };
+        return _.mapObject(minimalSightsForCrestRaw, function (row) {
+            return _.object(distances, row);
+        });
     }).factory('flightTime', function () {
         return {
             flat: {

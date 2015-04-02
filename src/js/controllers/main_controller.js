@@ -35,6 +35,9 @@ angular.module('Vatra.controllers.Main', [
         return !(_.isEmpty($scope.result))
     };
 
+    $scope.showMinimalSights = function () {
+        return !(_.isEmpty($scope.result.minimalSights));
+    };
 
     $scope.data = {
         devicesNumber: 1,
