@@ -83,18 +83,20 @@
                 </h4>
             </div>
             <div class="panel-body">
-                <p>Приціл: {{ result.sights.adjustedSights | number: 0 }}</p>
+                <p>Приціл: {{ result.sights.adjustedSights | s: 'numberFormat': [0, '', ''] }}</p>
 
-                <p>Поправка напрямку {{ result.sights.sideAdjustment | number: 2 }} тис.</p>
+                <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat': [2, '', ''] }} тис.</p>
 
-                <p>Фронт для 1 АГС {{ result.sights.oneDeviceFront | number: 2 }} тис</p>
+                <p>Фронт для 1 АГС {{ result.sights.oneDeviceFront | s: 'numberFormat': [2, '', ''] }} тис</p>
 
                 <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
-                    result.sights.frontDispersal | number: 2 }} тис</p>
+                    result.sights.frontDispersal | s: 'numberFormat': [2, '', '']}} тис</p>
 
-                <p ng-show="showFan()">Віяло для АГС, що зліва: {{ result.sights.fan | number: 2 }} тис</p>
+                <p ng-show="showFan()">Віяло для АГС, що зліва: {{ result.sights.fan | s: 'numberFormat': [2, '', ''] }}
+                    тис</p>
 
-                <p>Розхід по {{ result.grenadesConsumption.grenadesPerDevice | number: 0 }} гран/АГС</p>
+                <p>Розхід по {{ result.grenadesConsumption.grenadesPerDevice | s: 'numberFormat': [0, '', ''] }}
+                    гран/АГС</p>
 
                 <p>Вузька вилка {{ result.sights.thinFork }}</p>
 

@@ -14,7 +14,9 @@ var config = {
       './bower_components/angular/angular.js',
       './bower_components/angular-route/angular-route.js',
         './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.js',
-        './bower_components/underscore/underscore.js'
+        './bower_components/underscore/underscore.js',
+        './bower_components/underscore.string/dist/underscore.string.js',
+        './bower_components/angular-underscore-string/angular-underscore-string.js'
     ],
 
     fonts: [
@@ -50,6 +52,7 @@ if (require('fs').existsSync('./config.js')) {
 =            Requiring stuffs            =
 ========================================*/
 
+//noinspection JSUnusedGlobalSymbols
 var gulp           = require('gulp'),
     seq            = require('run-sequence'),
     connect        = require('gulp-connect'),
@@ -86,6 +89,7 @@ gulp.on('error', function(e) {
 =            Clean dest folder            =
 =========================================*/
 
+//noinspection JSUnusedLocalSymbols
 gulp.task('clean', function (cb) {
   return gulp.src([
         path.join(config.dest, 'index.html'),

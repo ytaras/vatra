@@ -1,6 +1,7 @@
 angular.module('Vatra', [
     'ngRoute',
     'mobile-angular-ui',
+    'underscore.string',
     'Vatra.controllers.Main',
     'Vatra.services.Data',
     'Vatra.services.Cordova'
