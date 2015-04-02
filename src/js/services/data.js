@@ -58,6 +58,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             } else if (data.trajectory == 'hover') {
                 angleSign = -1;
             }
+            var topoSupportDistance = lookupSupportDistance(sightsTable[data.trajectory], data.distance);
             var supportDistance = lookupSupportDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance);
             var supportSights = sightsTable[data.trajectory][supportDistance];
             var deltaX = distanceChangePer1M[data.trajectory][supportDistance];
@@ -67,13 +68,12 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 supportDistance: supportDistance,
                 precisionAdjustment: precisionAdjustment,
                 originalSights: supportSights + precisionAdjustment,
-                derivationAdjustment: derivationAdjustments[data.trajectory][supportDistance],
-                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / meteoAdjustments.effectiveDistance * angleSign,
+                derivationAdjustment: derivationAdjustments[data.trajectory][topoSupportDistance],
+                angleAdjustment: ((data.targetElevation - data.positionElevation) * 1000) / data.distance * angleSign,
                 supportDistance: supportDistance,
-                // TODO: Verify which distance should be used in following formulas:
                 thinFork: lookupByDistance(thinFork[data.trajectory], data.distance),
                 distanceChangePer1M: deltaX,
-                flightTime: flightTime[data.trajectory][supportDistance],
+                flightTime: flightTime[data.trajectory][topoSupportDistance],
                 oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
                 fan: (data.front - data.interval) * 10 / (data.distance * 2)
