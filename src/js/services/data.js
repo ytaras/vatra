@@ -72,6 +72,12 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             } else if (data.trajectory == 'hover') {
                 angleSign = -1;
             }
+            var fan;
+            if (data.type == 'single') {
+                fan = data.interval * 5 / data.distance;
+            } else if (data.type == 'extended') {
+                fan = (data.interval - data.front) * 5 / data.distance;
+            }
             var topoSupportDistance = lookupSupportDistance(sightsTable[data.trajectory], data.distance);
             var supportDistance = lookupSupportDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance);
             var supportSights = sightsTable[data.trajectory][supportDistance];
@@ -89,7 +95,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 flightTime: flightTime[data.trajectory][topoSupportDistance],
                 oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
-                fan: (data.front - data.interval) * 10 / (data.distance * 2)
+                fan: fan
             };
             result.adjustedSights = result.originalSights + result.angleAdjustment;
             result.sideAdjustment = (meteoAdjustments.sideWindAdjustment + result.derivationAdjustment) * 0.01;

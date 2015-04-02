@@ -24,7 +24,7 @@ angular.module('Vatra.controllers.Main', [
     };
 
     $scope.showFan = function () {
-        return $scope.showFrontDispersal() && $scope.data.devicesNumber == 2;
+        return ($scope.showFrontDispersal() || $scope.singleTarget()) && $scope.data.devicesNumber == 2;
     };
 
     $scope.singleTarget = function () {
