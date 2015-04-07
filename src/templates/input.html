@@ -1,6 +1,6 @@
 <section class="section scrollable">
     <div class="scrollable-content">
-        <form class="" ng-submit="count(data)">
+        <form class="" ng-submit="count(data)" name="inputForm" data-toggle="validator">
             <h2>Ціль</h2>
 
             <div class="form-group">
@@ -8,14 +8,23 @@
                 <select class="form-control" id="inputType" ng-model="data.type"
                         ng-options="t.value as t.label for t in types">
                 </select>
+
             </div>
             <div class="form-group">
                 <label for="inputTarget" class="control-label">Ціль</label>
                 <input type="text" class="form-control" id="inputTarget">
             </div>
-            <div class="form-group">
+            <div class="form-group" show-errors="">
                 <label for="inputDistance" class="control-label">Дальність</label>
-                <input type="number" class="form-control" id="inputDistance" ng-model="data.distance" required>
+                <input type="number" class="form-control" id="inputDistance" ng-model="data.distance"
+                       name="inputDistance"
+                       max="1730" min="1" required>
+                <span ng-show="inputForm.inputDistance.$dirty && inputForm.inputDistance.$invalid" class="help-block">
+                    <span ng-show="inputForm.inputDistance.$error.required">Дистанція до цілі обов"язкова</span>
+                    <span ng-show="inputForm.inputDistance.$error.max">Максимальна дистанція до цілі - 1730</span>
+                    <span ng-show="inputForm.inputDistance.$error.min">Введіть позитивне значення</span>
+                    <span ng-show="inputForm.inputDistance.$error.number">Введіть число</span>
+                </span>
             </div>
             <div class="form-group">
                 <label for="inputElevation" class="control-label">Висота</label>

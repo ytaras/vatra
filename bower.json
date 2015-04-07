@@ -10,6 +10,7 @@
     "bootstrap": "3.x",
     "underscore": "1.8.x",
     "underscore.string": "3.x",
-    "angular-underscore-string": "1.x"
+    "angular-underscore-string": "1.x",
+    "angular-bootstrap-show-errors": "x.x.x"
   }
 }

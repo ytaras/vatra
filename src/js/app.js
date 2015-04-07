@@ -4,8 +4,8 @@ angular.module('Vatra', [
     'underscore.string',
     'Vatra.controllers.Main',
     'Vatra.services.Data',
-    'Vatra.services.Cordova'
-
+    'Vatra.services.Cordova',
+    'ui.bootstrap.showErrors'
 ])
 
     .config(function ($routeProvider) {

@@ -16,7 +16,8 @@ var config = {
         './bower_components/mobile-angular-ui/dist/js/mobile-angular-ui.js',
         './bower_components/underscore/underscore.js',
         './bower_components/underscore.string/dist/underscore.string.js',
-        './bower_components/angular-underscore-string/angular-underscore-string.js'
+        './bower_components/angular-underscore-string/angular-underscore-string.js',
+        './bower_components/angular-bootstrap-show-errors/src/showErrors.js'
     ],
 
     fonts: [
