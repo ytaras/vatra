@@ -64,5 +64,10 @@ angular.module('Vatra.controllers.Main', [
 
     $scope.count = function (data) {
         $scope.result = calculateSights(data);
+
+        var invalidFlat = data.trajectory == 'flat' && $scope.result.sights.adjustedSights > 667;
+        var invalidHover = data.trajectory == 'hover' &&
+            ($scope.result.sights.adjustedSights < 768 || $scope.result.sights.adjustedSights > 1167);
+        $scope.result.invalid = invalidFlat || invalidHover;
     };
 });
