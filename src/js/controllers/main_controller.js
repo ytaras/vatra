@@ -19,6 +19,12 @@ angular.module('Vatra.controllers.Main', [
         {label: '2', value: 2}
     ];
 
+    $scope.tapOnTargetSize = function () {
+        if ($scope.singleTarget()) {
+            alert('Виберіть характер цілі Площинна (понад 15х15)');
+        }
+    };
+
     $scope.showFrontDispersal = function () {
         return $scope.type = 'extended' && $scope.data.front > 20;
     };
