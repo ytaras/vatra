@@ -3,7 +3,8 @@ angular.module('Vatra.controllers.Main', [
 ]).controller('MainController', function ($scope, calculateSights) {
     $scope.types = [
         {label: 'Точечна (до 15х15)', value: 'single'},
-        {label: 'Площинна (понад 15х15)', value: 'extended'}
+        {label: 'Площинна (понад 15х15)', value: 'extended'},
+        {label: 'Рухома', value: 'moving'}
     ];
     $scope.trajectories = [
         {label: 'Настильна', value: 'flat'},
@@ -35,6 +36,10 @@ angular.module('Vatra.controllers.Main', [
 
     $scope.singleTarget = function () {
         return $scope.data.type == 'single';
+    };
+
+    $scope.movingTarget = function () {
+        return $scope.data.type == 'moving';
     };
 
     $scope.calculated = function () {

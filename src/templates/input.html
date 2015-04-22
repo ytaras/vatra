@@ -42,6 +42,20 @@
                        ng-disabled="singleTarget()" ng-model="data.depth" required>
             </div>
 
+            <div class="form-group" ng-show="movingTarget()">
+                <label for="targetVelocityDirection" class="control-label">Напрямок руху</label>
+                <input type="number" class="form-control" id="targetVelocityDirection"
+                       ng-model="data.targetVelocity">
+                <label for="targetVelocityDirection" class="control-label">год</label>
+            </div>
+            <div class="form-group" ng-show="movingTarget()">
+                <label for="targetVelocity" class="control-label">Швидкість</label>
+                <input type="number" class="form-control" id="targetVelocity"
+                       ng-model="data.targetVelocityDirection">
+                <label for="targetVelocity" class="control-label">км/год</label>
+            </div>
+
+
             <div class="form-group">
                 <label for="inputTrajectory" class="control-label">Траекторія</label>
                 <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
@@ -160,6 +174,10 @@
                 <p>Поправка на перевищення (кут, використовується топографічна дальність {{
                     data.distance }}): {{ result.sights.angleAdjustment }}</p>
 
+                <p>Поправка на рух (фронтальне зміщення цілі за час польоту - {{ result.movingAdjustments.forwardOffset
+                    }}): {{ result.adjustedSights.forwardMovingAdjustment
+                    }}</p>
+
                 <p>Приціл для опорної дальності {{ result.sights.supportDistance}}: {{ result.sights.supportSights
                     }}</p>
 
@@ -175,6 +193,10 @@
 
                 <p>Поправка на боковий вітер (з таблиці на дальність {{ data.distance }}): {{
                     result.meteoAdjustments.sideWindAdjustment }}</p>
+
+                <p>Поправка на рух (бокове зміщення цілі за час польоту - {{ result.movingAdjustments.sideOffset }}): {{
+                    result.adjustedSights.sideMovingAdjustment
+                    }}</p>
 
                 <p>Поправка на деривацію (для {{data.distance}}): {{
                     result.sights.derivationAdjustment }}</p>

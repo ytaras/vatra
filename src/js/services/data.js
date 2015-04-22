@@ -15,12 +15,14 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             result.grenadesPerDevice = result.totalGrenades / data.devicesNumber;
             return result;
         }
-    }).factory('calculateSights', function (grenadesConsumption, meteoAdjustments, sightsValues, calculateMinimalSights) {
+    }).factory('calculateSights', function (grenadesConsumption, meteoAdjustments, sightsValues, calculateMinimalSights,
+                                            movingAdjustments) {
         return function (data) {
             var result = {};
             result.grenadesConsumption = grenadesConsumption(data);
             result.meteoAdjustments = meteoAdjustments(data);
-            result.sights = sightsValues(data, result.meteoAdjustments);
+            result.movingAdjustments = movingAdjustments(data);
+            result.sights = sightsValues(data, result.meteoAdjustments, result.movingAdjustments);
             result.minimalSights = calculateMinimalSights(data);
             return result;
         }
@@ -62,10 +64,29 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment;
             return result;
         }
+    }).factory('movingAdjustments', function (clockToRadian, kmphToMps, lookupByDistance, flightTime) {
+        return function (data) {
+            var targetVelocity;
+            if (data.type == 'moving') {
+                targetVelocity = kmphToMps(data.targetVelocity);
+            } else {
+                targetVelocity = 0;
+            }
+            var result = {
+                flightTime: lookupByDistance(flightTime[data.trajectory], data.distance),
+                targetVelocityDirection: clockToRadian(data.targetVelocityDirection),
+                targetVelocity: targetVelocity
+            };
+            result.forwardVelocity = Math.cos(result.targetVelocityDirection) * result.targetVelocity;
+            result.sideVelocity = Math.sin(result.targetVelocityDirection) * result.targetVelocity;
+            result.forwardOffset = result.forwardVelocity * result.flightTime;
+            result.sideOffset = result.sideVelocity * result.flightTime;
+            return result;
+        };
     }).factory('sightsValues', function (sightsTable, derivationAdjustments,
                                          thinFork, distanceChangePer1M, flightTime,
                                          forwardWindAdjustment, lookupByDistance, lookupSupportDistance) {
-        return function (data, meteoAdjustments) {
+        return function (data, meteoAdjustments, movingAdjustments) {
             var angleSign = 0;
             if (data.trajectory == 'flat') {
                 angleSign = 1;
@@ -97,10 +118,16 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 frontDispersal: 150 / data.distance,
                 fan: fan
             };
-            result.adjustedSights = result.originalSights + result.angleAdjustment;
-            result.sideAdjustment = (meteoAdjustments.sideWindAdjustment + result.derivationAdjustment) * 0.01;
+            result.forwardMovingAdjustment = movingAdjustments.forwardOffset / deltaX;
+            result.sideMovingAdjustment = (movingAdjustments.sideMovingAdjustment * 1000) / data.distance;
+            result.adjustedSights = result.originalSights + result.angleAdjustment + result.forwardMovingAdjustment;
+            result.sideAdjustment = (meteoAdjustments.sideWindAdjustment + result.derivationAdjustment + result.sideMovingAdjustment) * 0.01;
             return result;
         }
+    }).factory('kmphToMps', function () {
+        return function (kmph) {
+            return kmph * 100 / 6;
+        };
     }).factory('clockToRadian', function () {
         return function (clock) {
             var degrees = (clock % 12) * 30;
