@@ -74,6 +74,7 @@ var gulp           = require('gulp'),
     ngFilesort     = require('gulp-angular-filesort'),
     streamqueue    = require('streamqueue'),
     rename         = require('gulp-rename'),
+    coffee = require('gulp-coffee'),
     path           = require('path');
 
 
@@ -212,7 +213,7 @@ gulp.task('less', function () {
 gulp.task('js', function() {
     streamqueue({ objectMode: true },
       gulp.src(config.vendor.js),
-      gulp.src('./src/js/**/*.js').pipe(ngFilesort()),
+        gulp.src('./src/js/**/*.coffee').pipe(coffee()).pipe(ngFilesort()),
       gulp.src(['src/templates/**/*.html']).pipe(templateCache({ module: 'Vatra' }))
     )
     .pipe(sourcemaps.init())
