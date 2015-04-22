@@ -1,10 +1,15 @@
-angular.module("Vatra.model.userInput", [])
-  .factory("targetProperties", () -> () -> new Target())
+angular.module("Vatra.model.userInput", ["Vatra.model.calculations"])
+  .factory("targetProperties", (grenadesCalculator) -> () ->
+    new Target(grenadesCalculator))
   .factory("firingPosition", () -> () -> new FiringPosition())
 
 
 class Target
-  constructor: (@type = 'single', @distance = 400, @trajectory = 'flat', @elevation = 100) ->
+  constructor: (@grenadesCalculator) ->
+    @type = 'single'
+    @distance = 400
+    @trajectory = 'flat'
+    @elevation = 100
 
   isSingle: () -> @type == 'single'
   isMoving: () -> @type == 'moving'
@@ -15,6 +20,12 @@ class Target
 
   isSuppressTask: () -> @task == 'suppress'
   isDestroyTask: () -> @task == 'destroy'
+
+  grenadesCount: () -> @grenadesCalculator.grenadesCount(this)
+
+  area: () ->
+    throw new Error('We don\'t have area for not-area target') unless isArea()
+    (@front * @depth) / 100
 
   validate: () ->
     @errors = []
@@ -32,9 +43,15 @@ class Target
     return @errors.empty()
 
 class FiringPosition
-  constructor: (@devicesNumber = 1, @interval = 15, @positionElevation = 100) ->
+  constructor: () ->
+    @devicesNumber = 1
+    @interval = 15
+    @positionElevation = 100
 
 class Meteo
-  constructor: (@windSpeed = 0, @windDirection = 12, @temperature = 15) ->
+  constructor: () ->
+    @windSpeed = 0
+    @windDirection = 12
+    @temperature = 15
 
 
