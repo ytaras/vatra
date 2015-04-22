@@ -50,6 +50,17 @@ angular.module('Vatra.controllers.Main', [
         return !(_.isEmpty($scope.result.minimalSights));
     };
 
+    $scope.showSafeSights = function () {
+        return $scope.data.ourForcesDistance > 0 && $scope.data.trajectory == 'flat';
+    };
+
+    $scope.isNotSafe = function () {
+        if (!$scope.calculated()) {
+            return false;
+        }
+        return $scope.result.sights.adjustedSights <= $scope.result.sights.safeSights;
+    };
+
     $scope.data = {
         devicesNumber: 1,
         type: 'single',
@@ -63,7 +74,10 @@ angular.module('Vatra.controllers.Main', [
         windDirection: 12,
         interval: 15,
         positionElevation: 100,
-        targetElevation: 100
+        targetElevation: 100,
+        targetVelocityDirection: 0,
+        targetVelocity: 0,
+        ourForcesDistance: 0
     };
     $scope.result = {};
 
