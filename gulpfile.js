@@ -74,8 +74,10 @@ var gulp           = require('gulp'),
     ngFilesort     = require('gulp-angular-filesort'),
     streamqueue    = require('streamqueue'),
     rename         = require('gulp-rename'),
-    coffee = require('gulp-coffee'),
+    coffee         = require('gulp-coffee'),
+    karma          = require('gulp-karma'),
     path           = require('path');
+require('coffee-script').register();
 
 
 /*================================================

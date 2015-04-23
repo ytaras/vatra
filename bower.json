@@ -11,6 +11,7 @@
     "underscore": "1.8.x",
     "underscore.string": "3.x",
     "angular-underscore-string": "1.x",
-    "angular-bootstrap-show-errors": "x.x.x"
+    "angular-bootstrap-show-errors": "x.x.x",
+    "angular-mocks": "x.x.x"
   }
 }
