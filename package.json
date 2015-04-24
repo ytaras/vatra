@@ -28,7 +28,9 @@
     "karma-coffee-preprocessor": "^0.2.1",
     "karma-mocha": "^0.1.10",
     "karma-phantomjs-launcher": "^0.1.4",
+    "karma-should": "0.0.1",
     "run-sequence": "^0.3.6",
+    "should": "^6.0.1",
     "streamqueue": "^0.1.1",
     "weinre": "^2.0.0-pre-I0Z7U9OV"
   }

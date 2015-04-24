@@ -45,7 +45,7 @@ angular.module("Vatra.services.Data",
     result =
       forwardWind: forwardWind
       sideWind: sideWind
-      forwardWindAdjustment: -lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10
+      forwardWindDistanceAdjustment: -lookupByDistance(forwardWindAdjustment[data.trajectory], data.distance) * forwardWind / 10
       sideWindAdjustment: -lookupByDistance(sideWindAdjustment[data.trajectory], data.distance) * sideWind / 10
       pressureAdjustment: lookupByDistance(pressureAdjustment[data.trajectory], data.distance) * normPressure / 10
       temperatureOfAirAdjustment: lookupByDistance(temperatureOfAirAdjustment[data.trajectory],
@@ -53,7 +53,7 @@ angular.module("Vatra.services.Data",
       temperatureOfShellAdjustment: lookupByDistance(temperatureOfShellAdjustment[data.trajectory],
         data.distance) * normTemperature / 10
 
-    result.effectiveDistance = data.distance + result.forwardWindAdjustment + result.pressureAdjustment + result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment
+    result.effectiveDistance = data.distance + result.forwardWindDistanceAdjustment + result.pressureAdjustment + result.temperatureOfAirAdjustment + result.temperatureOfShellAdjustment
     result
 ).factory("movingAdjustments", (clockToRadian, kmphToMps, lookupByDistance, flightTime) ->
   (data) ->
