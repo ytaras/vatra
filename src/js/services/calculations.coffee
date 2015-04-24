@@ -1,18 +1,9 @@
-angular.module("Vatra.model.calculations",  ["Vatra.services.HardcodedTables", "Vatra.services.TableFunctions"])
-  .factory("", (singleTargetGrenadeConsumption, groupTargetGrenadeConsumption, averageByDistance) ->
-    new GrenadesCalculator(singleTargetGrenadeConsumption, groupTargetGrenadeConsumption, averageByDistance)
-)
+class SightsCalculator
+  constructor: (@database) ->
 
-class GrenadesCalculator
-  constructor: (@singleTargetTable, @groupTargetTable, @averageFunction) ->
+  calculate: (data) ->
+    tableValues = @database.getDataForDistance(data.target.distance, data.target.trajectory)
 
-  grenadesCount: (target) ->
-    valueFromTable = averageByDistance(tableFor(target), table.distance)
-    return valueFromTable if target.isSingle()
-    return valueFromTable * target.area()
-
-  tableFor: (target) ->
-    if target.isSingle()
-      return @singleTargetTable[target.task]
-    else if target.isArea()
-      return @groupTargetTable[target.trajectory][target.task]
+    sights: tableValues.sights
+    sideAdjustment: tableValues.adjustments.side.derivation
+    flightTime: tableValues.flightTime
