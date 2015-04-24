@@ -1,6 +1,7 @@
 assert = require('assert')
+should = require('should');
 
-describe 'SightsCalculator', () ->
+describe 'AggregatedCalculator', () ->
   defaultTargetData = () ->
     type: 'single'
     trajectory: 'flat'
@@ -23,10 +24,37 @@ describe 'SightsCalculator', () ->
     meteo: defaultMeteoData()
     position: defaultPositionData()
 
-  calculator = new SightsCalculator(new Database())
+  calculator = new AggregatedCalculator(new Database())
 
   it 'calculates data from table by default', () ->
     result = calculator.calculate(defaultData())
-    assert.equal(58, result.sights)
-    assert.equal(-1, result.sideAdjustment)
-    assert.equal(2.3, result.flightTime)
+    result.sights.should.be.approximately(58, 0.01)
+    result.flightTime.should.be.exactly(2.3)
+    result.sideAdjustment.should.be.approximately(-1, 0.01)
+
+  describe 'wind adjustment', () ->
+    data = defaultData()
+
+    beforeEach () ->
+      data.meteo.windSpeed = 35
+    it 'calculates side wind adjustment', () ->
+      data.meteo.windDirection = 3
+
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(58, 0.01)
+      result.flightTime.should.be.exactly(2.3)
+      result.sideAdjustment.should.be.approximately(20, 0.01)
+
+    it 'calculates forward wind adjustment', () ->
+      data.meteo.windDirection = 6
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(54.18, 0.01)
+      result.flightTime.should.be.exactly(2.3)
+      result.sideAdjustment.should.be.approximately(-1, 0.01)
+
+    it 'calculates diagonal wind adjustment', () ->
+      data.meteo.windDirection = 7
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(54.69, 0.01)
+      result.flightTime.should.be.exactly(2.3)
+      result.sideAdjustment.should.be.approximately(-11.5, 0.01)

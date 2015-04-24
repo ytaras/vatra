@@ -3,7 +3,7 @@ module.exports = function(config) {
 
         //basePath: 'bower_components',
         // frameworks to use
-        frameworks: ['mocha', 'browserify'],
+        frameworks: ['mocha', 'browserify', 'should'],
 
         // list of files / patterns to load in the browser
         files: [
