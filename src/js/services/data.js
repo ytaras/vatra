@@ -119,7 +119,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 fan: fan
             };
             result.forwardMovingAdjustment = movingAdjustments.forwardOffset / deltaX;
-            result.sideMovingAdjustment = (movingAdjustments.sideOffset * 1000) / data.distance;
+            result.sideMovingAdjustment = movingAdjustments.sideOffset * 1000 / data.distance;
             result.adjustedSights = result.originalSights + result.angleAdjustment + result.forwardMovingAdjustment;
             result.sideAdjustment = (meteoAdjustments.sideWindAdjustment + result.derivationAdjustment + result.sideMovingAdjustment) * 0.01;
 
@@ -131,7 +131,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
         }
     }).factory('kmphToMps', function () {
         return function (kmph) {
-            return kmph * 100 / 6;
+            return kmph / 3.6;
         };
     }).factory('clockToRadian', function () {
         return function (clock) {
