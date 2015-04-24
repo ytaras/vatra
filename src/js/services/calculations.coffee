@@ -23,13 +23,19 @@ class MeteoAdjustments
     difference = @meteoDistance() - @data.target.distance
     difference / @tableValue.deltaX
 
-  meteoDistance: () -> @data.target.distance + @forwardWindDistanceAdjustment()
+  meteoDistance: () ->
+    @data.target.distance + @forwardWindDistanceAdjustment() + @pressureDistanceAdjustment()
 
   sideWindAdjustment: ->
     -@sideWind() * @tableValue.adjustments.side.wind / 10
 
   forwardWindDistanceAdjustment: ->
     -@forwardWind() * @tableValue.adjustments.forward.wind / 10
+
+  pressureDistanceAdjustment: ->
+    normPressure = 9 * (@data.position.elevation - 110) / 100
+    normPressure = 0 if normPressure < 0
+    @tableValue.adjustments.forward.pressure * normPressure / 10
 
   sideWind: () ->
     @util.sidePart(@meteo.windSpeed, @meteo.windDirection)

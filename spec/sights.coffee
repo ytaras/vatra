@@ -24,6 +24,10 @@ describe 'AggregatedCalculator', () ->
     position: defaultPositionData()
 
   calculator = new AggregatedCalculator(new Database())
+  data = undefined
+
+  beforeEach () ->
+    data = defaultData()
 
   it 'calculates data from table by default', () ->
     result = calculator.calculate(defaultData())
@@ -32,10 +36,9 @@ describe 'AggregatedCalculator', () ->
     result.sideAdjustment.should.be.approximately(-1, 0.01)
 
   describe 'wind adjustment', () ->
-    data = defaultData()
-
     beforeEach () ->
       data.meteo.windSpeed = 35
+
     it 'calculates side wind adjustment', () ->
       data.meteo.windDirection = 3
 
@@ -57,3 +60,17 @@ describe 'AggregatedCalculator', () ->
       result.sights.should.be.approximately(54.69, 0.01)
       result.flightTime.should.be.exactly(2.3)
       result.sideAdjustment.should.be.approximately(-11.5, 0.01)
+
+  describe 'pressure adjustment', () ->
+    it 'doesnt add adjustment if elevation < 110', () ->
+      data.target.elevation = 110
+      data.position.elevation = 110
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(58, 0.01)
+
+
+    it 'does add adjustment if elevation > 110', () ->
+      data.target.elevation = 210
+      data.position.elevation = 210
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(57.84, 0.01)
