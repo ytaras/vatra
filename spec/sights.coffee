@@ -74,3 +74,14 @@ describe 'AggregatedCalculator', () ->
       data.position.elevation = 210
       result = calculator.calculate(data)
       result.sights.should.be.approximately(57.84, 0.01)
+
+  describe 'temperature adjustment', () ->
+    it 'calculates for low temperature', () ->
+      data.meteo.temperature = 5
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(59.09, 0.01)
+
+    it 'calculates for high temperature', () ->
+      data.meteo.temperature = 25
+      result = calculator.calculate(data)
+      result.sights.should.be.approximately(56.9, 0.01)
