@@ -58,7 +58,7 @@ angular.module('Vatra.controllers.Main', [
         if (!$scope.calculated()) {
             return false;
         }
-        return $scope.result.sights.adjustedSights <= $scope.result.sights.safeSights;
+        return $scope.result.sights.adjustedSights < $scope.result.sights.safeSights;
     };
 
     $scope.data = {
