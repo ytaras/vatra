@@ -135,7 +135,8 @@
 
                 <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat': [2, '', ''] }} тис.</p>
 
-                <p>Фронт для 1 АГС {{ result.sights.oneDeviceFront | s: 'numberFormat': [2, '', ''] }} тис</p>
+                <p ng-show="showFrontDispersal()">Фронт для 1 АГС {{ result.sights.oneDeviceFront | s: 'numberFormat':
+                    [2, '', ''] }} тис</p>
 
                 <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
                     result.sights.frontDispersal | s: 'numberFormat': [2, '', '']}} тис</p>
