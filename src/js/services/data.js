@@ -94,10 +94,12 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 angleSign = -1;
             }
             var fan;
-            if (data.type == 'single') {
-                fan = data.interval * 5 / data.distance;
-            } else if (data.type == 'extended') {
-                fan = (data.interval - data.front) * 5 / data.distance;
+            if (data.devicesNumber == 2) {
+                if (data.type == 'single') {
+                    fan = data.interval * 10 / data.distance;
+                } else if (data.type == 'extended') {
+                    fan = (data.front - data.interval) * 10 / data.distance;
+                }
             }
             var topoSupportDistance = lookupSupportDistance(sightsTable[data.trajectory], data.distance);
             var supportDistance = lookupSupportDistance(sightsTable[data.trajectory], meteoAdjustments.effectiveDistance);

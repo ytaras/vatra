@@ -140,8 +140,13 @@
                 <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
                     result.sights.frontDispersal | s: 'numberFormat': [2, '', '']}} тис</p>
 
-                <p ng-show="showFan()">Віяло для АГС, що зліва: {{ result.sights.fan | s: 'numberFormat': [2, '', ''] }}
+                <p ng-show="showCollapsedFan()">Віяло зосереджене: {{ result.sights.fan | s: 'numberFormat': [2, '', '']
+                    }}
                     тис</p>
+
+                <p ng-show="showWidthFan()">Віяло по ширині: {{ result.sights.fan | s: 'numberFormat': [2, '', ''] }}
+                    тис</p>
+
 
                 <p>Розхід по {{ result.grenadesConsumption.grenadesPerDevice | s: 'numberFormat': [0, '', ''] }}
                     гран/АГС</p>
