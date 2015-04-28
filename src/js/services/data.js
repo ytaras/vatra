@@ -118,7 +118,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 frontDispersal: 150 / data.distance,
                 fan: fan
             };
-            result.forwardMovingAdjustment = movingAdjustments.forwardOffset / deltaX;
+            result.forwardMovingAdjustment = angleSign * movingAdjustments.forwardOffset / deltaX;
             result.sideMovingAdjustment = movingAdjustments.sideOffset * 1000 / data.distance;
             result.adjustedSights = result.originalSights + result.angleAdjustment + result.forwardMovingAdjustment;
             result.sideAdjustment = (meteoAdjustments.sideWindAdjustment + result.derivationAdjustment + result.sideMovingAdjustment) * 0.01;

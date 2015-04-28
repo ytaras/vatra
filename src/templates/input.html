@@ -31,15 +31,15 @@
                 <input type="number" class="form-control" id="inputElevation" ng-model="data.targetElevation"
                        required>
             </div>
-            <div class="form-group" ng-click="tapOnTargetSize()">
+            <div class="form-group" ng-show="extendedTarget()">
                 <label for="inputFront" class="control-label">Фронт</label>
                 <input type="number" class="form-control" id="inputFront"
-                       ng-disabled="singleTarget()" ng-model="data.front" required>
+                       ng-model="data.front" required>
             </div>
-            <div class="form-group" ng-click="tapOnTargetSize()">
+            <div class="form-group" ng-show="extendedTarget()">
                 <label for="inputDepth" class="control-label">Глибина</label>
                 <input type="number" class="form-control" id="inputDepth"
-                       ng-disabled="singleTarget()" ng-model="data.depth" required>
+                       ng-model="data.depth" required>
             </div>
 
             <div class="form-group" ng-show="movingTarget()">
@@ -129,6 +129,9 @@
 
                 <h1 ng-show="isNotSafe()" class="text-danger">Небезпечна стрільба. Ураження своїх військ</h1>
                 <p>Приціл: {{ result.sights.adjustedSights | s: 'numberFormat': [0, '', ''] }}</p>
+
+                <p ng-show="movingTarget()">Упередження {{ result.sights.sideMovingAdjustment * 0.01 | s:
+                    'numberFormat': [2, '', ''] }} (враховано в поправку напрямку)</p>
 
                 <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat': [2, '', ''] }} тис.</p>
 
