@@ -13,53 +13,23 @@
 </head>
 
 <body>
-<div class="section">
-    <div class="container">
-        <div class="row">
-            <form class="form-horizontal" role="form">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <label for="inputEmail3" class="control-label">Email</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <div class="col-sm-3">
-                            <label for="inputPassword3" class="control-label">Password</label>
-                        </div>
-                        <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <section class="section scrollable">
     <div class="scrollable-content">
         <div class="container">
             <div class="row">
-                <form class="" ng-submit="count(data)" name="inputForm" data-toggle="validator">
+                <form class="form-horizontal" ng-submit="count(data)" name="inputForm" data-toggle="validator">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="inputType" class="control-label">Xaрактер цілі</label>
-                            </div>
+                            <label for="inputType" class="control-label col-sm-3">Xaрактер цілі</label>
+
                             <div class="col-sm-9">
                                 <select class="form-control" id="inputType" ng-model="data.type"
                                         ng-options="t.value as t.label for t in types"></select>
                             </div>
                         </div>
                         <div class="form-group" show-errors="">
-                            <div class="col-sm-3">
-                                <label for="inputDistance" class="control-label">Дальність</label>
-                            </div>
+                            <label for="inputDistance" class="control-label col-sm-3">Дальність</label>
+
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="inputDistance" ng-model="data.distance"
@@ -76,9 +46,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="inputElevation" class="control-label">Висота</label>
-                            </div>
+                            <label for="inputElevation" class="control-label col-sm-3">Висота</label>
+
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="text" class="form-control" id="inputElevation"
@@ -89,9 +58,8 @@
                             </div>
                         </div>
                         <div class="form-group" ng-show="extendedTarget()">
-                            <div class="col-sm-3">
-                                <label for="inputFront" class="control-label">Фронт</label>
-                            </div>
+                            <label for="inputFront" class="control-label col-sm-3">Фронт</label>
+
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputFront" ng-model="data.front"
@@ -100,10 +68,31 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group" ng-show="extendedTarget()">
-                            <div class="col-sm-3">
-                                <label for="inputDepth" class="control-label">Глибина</label>
+                        <div class="form-group" ng-show="movingTarget()">
+                            <label for="targetVelocityDirection" class="control-label col-sm-3">Напрямок руху</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="targetVelocityDirection"
+                                           ng-model="data.targetVelocityDirection">
+                                    <span class="input-group-addon">год</span>
+                                </div>
                             </div>
+                        </div>
+                        <div class="form-group" ng-show="movingTarget()">
+                            <label for="targetVelocity" class="control-label col-sm-3">Швидкість</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="targetVelocity"
+                                           ng-model="data.targetVelocity">
+                                    <span class="input-group-addon">км/год</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="extendedTarget()">
+                            <label for="inputDepth" class="control-label col-sm-3">Глибина</label>
+
                             <div class="col-sm-9">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputDepth" ng-model="data.depth"
@@ -113,18 +102,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="inputTrajectory" class="control-label">Траекторія</label>
-                            </div>
+                            <label for="inputTrajectory" class="control-label col-sm-3">Траекторія</label>
+
                             <div class="col-sm-9">
                                 <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
                                         ng-options="t.value as t.label for t in trajectories"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-3">
-                                <label for="inputTask" class="control-label">Завдання</label>
-                            </div>
+                            <label for="inputTask" class="control-label col-sm-3">Завдання</label>
+
                             <div class="col-sm-9">
                                 <select class="form-control" id="inputTask" ng-model="data.task"
                                         ng-options="t.value as t.label for t in tasks"
@@ -132,77 +119,112 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6"></div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputDevicesNumber" class="control-label col-sm-3">Гранатометів</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <select class="form-control" id="inputDevicesNumber"
+                                            ng-model="data.devicesNumber"
+                                            ng-options="t.value as t.label for t in counts"
+                                            required=""></select>
+                                    <span class="input-group-addon">од.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputDevicesInterval" class="control-label col-sm-3">Інтервал</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group"><input type="number" class="form-control"
+                                                                id="inputDevicesInterval"
+                                                                ng-model="data.interval">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPositionHeight" class="control-label col-sm-3">Висота ВП</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputPositionHeight"
+                                           ng-model="data.positionElevation" required="">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTemperature" class="control-label col-sm-3">Температура повітря</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group"><input type="number" class="form-control" id="inputTemperature"
+                                                                ng-model="data.temperature"><span
+                                        class="input-group-addon">град</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputWindDirection" class="control-label col-sm-3">Кут вітру</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group"><input type="number" class="form-control"
+                                                                id="inputWindDirection" ng-model="data.windDirection">
+                                    <span class="input-group-addon">год</span></div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="inputWindSpeed" class="control-label col-sm-3">Швидкість вітру</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputWindSpeed"
+                                           ng-model="data.windSpeed">
+                                    <span class="input-group-addon">м/c</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+
+                            <label for="crestHeight" class="control-label col-sm-3">Перевищення гребеня над ВП</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group"><input type="number" class="form-control"
+                                                                id="crestHeight" ng-model="data.crestHeight">
+                                    <span class="input-group-addon">м</span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="crestDistance" class="control-label col-sm-3">Відстань до гребеня</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="crestDistance"
+                                           ng-model="data.crestDistance">
+                                    <span class="input-group-addon">м</span></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ourForcesDistance" class="control-label col-sm-3">Відстань до наших
+                                військ</label>
+
+                            <div class="col-sm-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control"
+                                           id="ourForcesDistance" ng-model="data.ourForcesDistance">
+                                    <span class="input-group-addon">м</span></div>
+                            </div>
+                        </div>
+
+                    </div>
                 </form>
             </div>
-            <h2>Ціль</h2>
 
-            <div class="form-group">
-                <label for="inputTarget" class="control-label">Ціль</label>
-                <input type="text" class="form-control" id="inputTarget">
-            </div>
-            <div class="form-group" ng-show="movingTarget()">
-                <label for="targetVelocityDirection" class="control-label">Напрямок руху</label>
-                <input type="number" class="form-control" id="targetVelocityDirection"
-                       ng-model="data.targetVelocityDirection">
-                <label for="targetVelocityDirection" class="control-label">год</label>
-            </div>
-            <div class="form-group" ng-show="movingTarget()">
-                <label for="targetVelocity" class="control-label">Швидкість</label>
-                <input type="number" class="form-control" id="targetVelocity"
-                       ng-model="data.targetVelocity">
-                <label for="targetVelocity" class="control-label">км/год</label>
-            </div>
-            <h2>Вогнева позиція</h2>
-
-            <div class="form-group">
-                <label for="inputPositionHeight" class="control-label">Висота</label>
-                <input type="text" class="form-control" id="inputPositionHeight"
-                       ng-model="data.positionElevation" required="">
-            </div>
-            <div class="form-group">
-                <label for="inputDevicesNumber" class="control-label">Кількість гранатометів</label>
-                <select class="form-control" id="inputDevicesNumber"
-                        ng-model="data.devicesNumber" ng-options="t.value as t.label for t in counts"
-                        required=""></select>
-            </div>
-            <div class="form-group">
-                <label for="inputDevicesInterval" class="control-label">Інтервал</label>
-                <input type="number" class="form-control" id="inputDevicesInterval"
-                       ng-model="data.interval">
-            </div>
-            <div class="form-group">
-                <label for="inputTemperature" class="control-label">Температура повітря</label>
-                <input type="number" class="form-control" id="inputTemperature"
-                       ng-model="data.temperature">
-            </div>
-            <div class="form-group">
-                <label for="inputWindDirection" class="control-label">Кут вітру (по годиннику)</label>
-                <input type="number" class="form-control"
-                       id="inputWindDirection" ng-model="data.windDirection">
-            </div>
-            <div class="form-group">
-                <label for="inputWindSpeed" class="control-label">Швидкість вітру м/c</label>
-                <input type="number" class="form-control" id="inputWindSpeed"
-                       ng-model="data.windSpeed">
-            </div>
-            <h2>Стрільба з закритої позиції</h2>
-
-            <div class="form-group">
-                <label for="crestHeight" class="control-label">Перевищення гребеня над ВП</label>
-                <input type="number" class="form-control"
-                       id="crestHeight" ng-model="data.crestHeight">
-            </div>
-            <div class="form-group">
-                <label for="crestDistance" class="control-label">Відстань до гребеня</label>
-                <input type="number" class="form-control" id="crestDistance"
-                       ng-model="data.crestDistance">
-            </div>
-            <div class="form-group">
-                <label for="ourForcesDistance" class="control-label">Відстань до наших військ</label>
-                <input type="number" class="form-control"
-                       id="ourForcesDistance" ng-model="data.ourForcesDistance">
-            </div>
             <button type="submit" class="btn btn-default">Розрахувати</button>
             <div class="panel panel-default" ng-show="calculated()">
                 <div class="panel-heading">
