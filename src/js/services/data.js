@@ -118,7 +118,7 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
                 flightTime: flightTime[data.trajectory][topoSupportDistance],
                 oneDeviceFront: ((data.front * 10) / (data.distance * data.devicesNumber)),
                 frontDispersal: 150 / data.distance,
-                fan: fan
+                fan: Math.abs(fan)
             };
             result.forwardMovingAdjustment = angleSign * movingAdjustments.forwardOffset / deltaX;
             result.sideMovingAdjustment = movingAdjustments.sideOffset * 1000 / data.distance;
