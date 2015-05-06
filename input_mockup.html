@@ -230,32 +230,26 @@
                     </div>
                 </div>
             </form>
-            <div class="panel panel-default" ng-show="calculated()">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Результат</h4>
-                </div>
-                <div class="panel-body">
+            <div class="row" ng-show="calculated()">
+                <div class="col-sm-12">
                     <h1 ng-show="result.invalid" class="text-danger">Дальність стрільби за межами ТТХ</h1>
 
                     <h1 ng-show="isNotSafe()" class="text-danger">Небезпечна стрільба. Ураження своїх військ</h1>
-
+                </div>
+                <div class="col-sm-6">
                     <p>Приціл: {{ result.sights.adjustedSights | s: 'numberFormat': [0, '', '']
                         }}</p>
+
+                    <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat':
+                        [2, '', ''] }} тис.</p>
 
                     <p ng-show="movingTarget()">Упередження {{ result.sights.sideMovingAdjustment * 0.01 | s:
                         'numberFormat':
                         [2, '', ''] }} (враховано в поправку напрямку)</p>
 
-                    <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat':
-                        [2, '', ''] }} тис.</p>
-
                     <p ng-show="showFrontDispersal()">Фронт для 1 АГС {{ result.sights.oneDeviceFront | s:
                         'numberFormat': [2,
                         '', ''] }} тис</p>
-
-                    <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
-                        result.sights.frontDispersal
-                        | s: 'numberFormat': [2, '', '']}} тис</p>
 
                     <p ng-show="showCollapsedFan()">Віяло зосереджене: {{ result.sights.fan | s: 'numberFormat': [2, '',
                         '']
@@ -272,77 +266,21 @@
                     <p>ΔX тис {{ result.sights.distanceChangePer1M }} м</p>
 
                     <p>Час польоту {{ result.sights.flightTime }} с</p>
+                </div>
+                <div class="col-sm-6">
+                    <p ng-show="showSafeSights()">Безпечний приціл {{ result.sights.safeSights }} тис</p>
 
-                    <p ng-show="showMinimalSights()">Мінімальний приціл {{ result.minimalSights.minimalSights }}</p>
+                    <p ng-show="showMinimalSights()">Мінімальний приціл через гребінь {{
+                        result.minimalSights.minimalSights }}</p>
 
-                    <p ng-show="showMinimalSights()">Мінімальна відстань до гребеня даної висоти {{
+                    <p ng-show="showMinimalSights()">Мінімальна дальність ВП-гребінь{{
                         result.minimalSights.minimalDistance
                         }} м</p>
 
-                    <p ng-show="showSafeSights()">Безпечний приціл {{ result.sights.safeSights }} тис</p>
-                </div>
-            </div>
-            <div class="panel panel-default" ng-show="calculated()">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Відладочна інформація</h4>
-                </div>
-                <div class="panel-body">
-                    <p>Вектор вітру по напрямку стрільби: {{ result.meteoAdjustments.forwardWind
-                        }} м/с</p>
+                    <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
+                        result.sights.frontDispersal
+                        | s: 'numberFormat': [2, '', '']}} тис</p>
 
-                    <p contenteditable="true">Поправка на вітер (дистанція {{ data.distance }}): {{
-                        result.meteoAdjustments.forwardWindAdjustment
-                        }}</p>
-
-                    <p>Поправка на температуру повітря і зарядів (дистанція {{ data.distance
-                        }}): {{ result.meteoAdjustments.temperatureOfAirAdjustment }} + {{
-                        result.meteoAdjustments.temperatureOfShellAdjustment
-                        }}</p>
-
-                    <p>Поправка на тиск (дистанція {{ data.distance }}): {{ result.meteoAdjustments.pressureAdjustment
-                        }}</p>
-
-                    <p>Ефективна дистанція (топографічна + метеопоправки): {{ result.meteoAdjustments.effectiveDistance
-                        }}</p>
-
-                    <p>Поправка на перевищення (кут, використовується топографічна дальність
-                        {{ data.distance }}): {{ result.sights.angleAdjustment }}</p>
-
-                    <p>Поправка на рух (фронтальне зміщення цілі за час польоту - {{
-                        result.movingAdjustments.forwardOffset
-                        }}): {{ result.adjustedSights.forwardMovingAdjustment }}</p>
-
-                    <p>Приціл для опорної дальності {{ result.sights.supportDistance}}: {{ result.sights.supportSights
-                        }}</p>
-
-                    <p>Поправка на різницю з опорною дальністю: {{ result.sights.precisionAdjustment
-                        }}, поправлене значення прицілу: {{ result.sights.originalSights }}</p>
-
-                    <p>Результат прицілювання - рахується як приціл + поправка на перевищення:
-                        {{ result.sights.originalSights + result.sights.angleAdjustment }}</p>
-
-                    <p>Вектор вітру поперечний до напрямку стрільби (якщо на 3 годину - плюс,
-                        на 9 - мінус): {{ result.meteoAdjustments.sideWind }}</p>
-
-                    <p>Поправка на боковий вітер (з таблиці на дальність {{ data.distance }}):
-                        {{ result.meteoAdjustments.sideWindAdjustment }}</p>
-
-                    <p>Поправка на рух (бокове зміщення цілі за час польоту - {{ result.movingAdjustments.sideOffset
-                        }}): {{ result.adjustedSights.sideMovingAdjustment }}</p>
-
-                    <p>Поправка на деривацію (для {{data.distance}}): {{ result.sights.derivationAdjustment
-                        }}</p>
-
-                    <p>Сума бокових поправок (повинна дорівнювати значенню поправки напрямку
-                        в панелі результатів): {{ result.sights.sideWindAdjustment + result.sights.derivationAdjustment
-                        }} / 100</p>
-
-                    <p>Для розрахунку вузької вилки використовується топодистанція, а не ефективна</p>
-
-                    <p>Дельта Х береться відносно ефективної дистанції, а не топо</p>
-
-                    <p>Час польоту береться відносно топо дистанції</p>
-                    <pre>{{ data | json }} {{ result | json }}</pre>
                 </div>
             </div>
         </div>
