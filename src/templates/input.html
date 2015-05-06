@@ -1,238 +1,273 @@
 <section class="section scrollable">
     <div class="scrollable-content">
-        <form class="" ng-submit="count(data)" name="inputForm" data-toggle="validator">
-            <h2>Ціль</h2>
+        <div class="container">
+            <form class="form-horizontal" ng-submit="count(data)" name="inputForm"
+                  data-toggle="validator">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="inputType" class="control-label col-xs-3">Xaрактер цілі</label>
 
-            <div class="form-group">
-                <label for="inputType" class="control-label">Xaрактер</label>
-                <select class="form-control" id="inputType" ng-model="data.type"
-                        ng-options="t.value as t.label for t in types">
-                </select>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="inputType" ng-model="data.type"
+                                        ng-options="t.value as t.label for t in types"></select>
+                            </div>
+                        </div>
+                        <div class="form-group" show-errors="">
+                            <label for="inputDistance" class="control-label col-xs-3">Дальність</label>
 
-            </div>
-            <div class="form-group">
-                <label for="inputTarget" class="control-label">Ціль</label>
-                <input type="text" class="form-control" id="inputTarget">
-            </div>
-            <div class="form-group" show-errors="">
-                <label for="inputDistance" class="control-label">Дальність</label>
-                <input type="number" class="form-control" id="inputDistance" ng-model="data.distance"
-                       name="inputDistance"
-                       max="1730" min="1" required>
-                <span ng-show="inputForm.inputDistance.$dirty && inputForm.inputDistance.$invalid" class="help-block">
-                    <span ng-show="inputForm.inputDistance.$error.required">Дистанція до цілі обов"язкова</span>
-                    <span ng-show="inputForm.inputDistance.$error.max">Дальність стрільби за межами ТТХ</span>
-                    <span ng-show="inputForm.inputDistance.$error.min">Введіть позитивне значення</span>
-                    <span ng-show="inputForm.inputDistance.$error.number">Введіть число</span>
-                </span>
-            </div>
-            <div class="form-group">
-                <label for="inputElevation" class="control-label">Висота</label>
-                <input type="number" class="form-control" id="inputElevation" ng-model="data.targetElevation"
-                       required>
-            </div>
-            <div class="form-group" ng-show="extendedTarget()">
-                <label for="inputFront" class="control-label">Фронт</label>
-                <input type="number" class="form-control" id="inputFront"
-                       ng-model="data.front" required>
-            </div>
-            <div class="form-group" ng-show="extendedTarget()">
-                <label for="inputDepth" class="control-label">Глибина</label>
-                <input type="number" class="form-control" id="inputDepth"
-                       ng-model="data.depth" required>
-            </div>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputDistance" ng-model="data.distance"
+                                           name="inputDistance" max="1730" min="1" required="">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                                        <span ng-show="inputForm.inputDistance.$dirty &amp;&amp; inputForm.inputDistance.$invalid"
+                                              class="help-block">
+                                            <span ng-show="inputForm.inputDistance.$error.required">Дистанція до цілі обов"язкова</span>
+                                            <span ng-show="inputForm.inputDistance.$error.max">Дальність стрільби за межами ТТХ</span>
+                                            <span ng-show="inputForm.inputDistance.$error.min">Введіть позитивне значення</span>
+                                            <span ng-show="inputForm.inputDistance.$error.number">Введіть число</span>
+                                        </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputElevation" class="control-label col-xs-3">Висота</label>
 
-            <div class="form-group" ng-show="movingTarget()">
-                <label for="targetVelocityDirection" class="control-label">Напрямок руху</label>
-                <input type="number" class="form-control" id="targetVelocityDirection"
-                       ng-model="data.targetVelocityDirection">
-                <label for="targetVelocityDirection" class="control-label">год</label>
-            </div>
-            <div class="form-group" ng-show="movingTarget()">
-                <label for="targetVelocity" class="control-label">Швидкість</label>
-                <input type="number" class="form-control" id="targetVelocity"
-                       ng-model="data.targetVelocity">
-                <label for="targetVelocity" class="control-label">км/год</label>
-            </div>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputElevation"
+                                           ng-model="data.targetElevation"
+                                           required="">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="extendedTarget()">
+                            <label for="inputFront" class="control-label col-xs-3">Фронт</label>
 
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputFront" ng-model="data.front"
+                                           required="">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="movingTarget()">
+                            <label for="targetVelocityDirection" class="control-label col-xs-3">Напрямок руху</label>
 
-            <div class="form-group">
-                <label for="inputTrajectory" class="control-label">Траекторія</label>
-                <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
-                        ng-options="t.value as t.label for t in trajectories">
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="inputTask" class="control-label">Завдання</label>
-                <select class="form-control" id="inputTask" ng-model="data.task"
-                        ng-options="t.value as t.label for t in tasks" required>
-                </select>
-            </div>
-            <h2>Вогнева позиція</h2>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="targetVelocityDirection"
+                                           ng-model="data.targetVelocityDirection">
+                                    <span class="input-group-addon">год</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="movingTarget()">
+                            <label for="targetVelocity" class="control-label col-xs-3">Швидкість</label>
 
-            <div class="form-group">
-                <label for="inputPositionHeight" class="control-label">Висота</label>
-                <input type="number" class="form-control" id="inputPositionHeight"
-                       ng-model="data.positionElevation" required>
-            </div>
-            <div class="form-group">
-                <label for="inputDevicesNumber" class="control-label">Кількість гранатометів</label>
-                    <select class="form-control" id="inputDevicesNumber" ng-model="data.devicesNumber"
-                            ng-options="t.value as t.label for t in counts" required>
-                    </select>
-            </div>
-            <div class="form-group">
-                <label for="inputDevicesInterval" class="control-label">Інтервал</label>
-                    <input type="number" class="form-control" id="inputDevicesInterval" ng-model="data.interval">
-            </div>
-            <div class="form-group">
-                <label for="inputTemperature" class="control-label">Температура повітря</label>
-                    <input type="number" class="form-control" id="inputTemperature" ng-model="data.temperature">
-            </div>
-            <div class="form-group">
-                <label for="inputWindDirection" class="control-label">Кут вітру (по годиннику)</label>
-                    <input type="number" class="form-control" id="inputWindDirection" ng-model="data.windDirection">
-            </div>
-            <div class="form-group">
-                <label for="inputWindSpeed" class="control-label">Швидкість вітру м/c</label>
-                    <input type="number" class="form-control" id="inputWindSpeed" ng-model="data.windSpeed">
-            </div>
-            <h2>Стрільба з закритої позиції</h2>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="targetVelocity"
+                                           ng-model="data.targetVelocity">
+                                    <span class="input-group-addon">км/год</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="extendedTarget()">
+                            <label for="inputDepth" class="control-label col-xs-3">Глибина</label>
 
-            <div class="form-group">
-                <label for="crestHeight" class="control-label">Перевищення гребеня над ВП</label>
-                <input type="number" class="form-control" id="crestHeight"
-                       ng-model="data.crestHeight">
-            </div>
-            <div class="form-group">
-                <label for="crestDistance" class="control-label">Відстань до гребеня</label>
-                <input type="number" class="form-control" id="crestDistance"
-                       ng-model="data.crestDistance">
-            </div>
-            <div class="form-group">
-                <label for="ourForcesDistance" class="control-label">Відстань до наших військ</label>
-                <input type="number" class="form-control" id="ourForcesDistance"
-                       ng-model="data.ourForcesDistance">
-            </div>
-            <button type="submit" class="btn btn-default">Розрахувати</button>
-        </form>
-        <div class="panel panel-default" ng-show="calculated()">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    Результат
-                </h4>
-            </div>
-            <div class="panel-body">
-                <h1 ng-show="result.invalid" class="text-danger">
-                    Дальність стрільби за межами ТТХ
-                </h1>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputDepth" ng-model="data.depth"
+                                           required="">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTrajectory" class="control-label col-xs-3">Траекторія</label>
 
-                <h1 ng-show="isNotSafe()" class="text-danger">Небезпечна стрільба. Ураження своїх військ</h1>
-                <p>Приціл: {{ result.sights.adjustedSights | s: 'numberFormat': [0, '', ''] }}</p>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
+                                        ng-options="t.value as t.label for t in trajectories"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTask" class="control-label col-xs-3">Завдання</label>
 
-                <p ng-show="movingTarget()">Упередження {{ result.sights.sideMovingAdjustment * 0.01 | s:
-                    'numberFormat': [2, '', ''] }} (враховано в поправку напрямку)</p>
+                            <div class="col-xs-9">
+                                <select class="form-control" id="inputTask" ng-model="data.task"
+                                        ng-options="t.value as t.label for t in tasks"
+                                        required=""></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            <label for="inputDevicesNumber" class="control-label col-xs-3">Гранатометів</label>
 
-                <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat': [2, '', ''] }} тис.</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <select class="form-control" id="inputDevicesNumber" ng-model="data.devicesNumber"
+                                            ng-options="t.value as t.label for t in counts" required=""></select>
+                                    <span class="input-group-addon">од.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputDevicesInterval" class="control-label col-xs-3">Інтервал</label>
 
-                <p ng-show="showFrontDispersal()">Фронт для 1 АГС {{ result.sights.oneDeviceFront | s: 'numberFormat':
-                    [2, '', ''] }} тис</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputDevicesInterval"
+                                           ng-model="data.interval">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPositionHeight" class="control-label col-xs-3">Висота ВП</label>
 
-                <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
-                    result.sights.frontDispersal | s: 'numberFormat': [2, '', '']}} тис</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="inputPositionHeight"
+                                           ng-model="data.positionElevation"
+                                           required="">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputTemperature" class="control-label col-xs-3">Температура повітря</label>
 
-                <p ng-show="showCollapsedFan()">Віяло зосереджене: {{ result.sights.fan | s: 'numberFormat': [2, '', '']
-                    }}
-                    тис</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputTemperature"
+                                           ng-model="data.temperature">
+                                    <span class="input-group-addon">град</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputWindDirection" class="control-label col-xs-3">Кут вітру</label>
 
-                <p ng-show="showWidthFan()">Віяло по ширині: {{ result.sights.fan | s: 'numberFormat': [2, '', ''] }}
-                    тис</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputWindDirection"
+                                           ng-model="data.windDirection">
+                                    <span class="input-group-addon">год</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputWindSpeed" class="control-label col-xs-3">Швидкість вітру</label>
 
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="inputWindSpeed"
+                                           ng-model="data.windSpeed">
+                                    <span class="input-group-addon">м/c</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="crestHeight" class="control-label col-xs-3">Висота гребеня</label>
 
-                <p>Розхід по {{ result.grenadesConsumption.grenadesPerDevice | s: 'numberFormat': [0, '', ''] }}
-                    гран/АГС</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="crestHeight"
+                                           ng-model="data.crestHeight">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="crestDistance" class="control-label col-xs-3">Відстань до гребеня</label>
 
-                <p>Вузька вилка {{ result.sights.thinFork }}</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="crestDistance"
+                                           ng-model="data.crestDistance">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="ourForcesDistance" class="control-label col-xs-3">Відстань до наших
+                                військ</label>
 
-                <p>ΔX тис {{ result.sights.distanceChangePer1M }} м</p>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="ourForcesDistance"
+                                           ng-model="data.ourForcesDistance">
+                                    <span class="input-group-addon">м</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-default btn-block">Розрахувати</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row" ng-show="calculated()">
+                <div class="col-xs-12">
+                    <h1 ng-show="result.invalid" class="text-danger">Дальність стрільби за межами ТТХ</h1>
 
-                <p>Час польоту {{ result.sights.flightTime }} с</p>
+                    <h1 ng-show="isNotSafe()" class="text-danger">Небезпечна стрільба. Ураження своїх військ</h1>
+                </div>
+                <div class="col-xs-6">
+                    <p>Приціл: {{ result.sights.adjustedSights | s: 'numberFormat': [0, '', '']
+                        }}</p>
 
-                <p ng-show="showMinimalSights()">Мінімальний приціл {{ result.minimalSights.minimalSights }}</p>
+                    <p>Поправка напрямку {{ result.sights.sideAdjustment | s: 'numberFormat':
+                        [2, '', ''] }} тис.</p>
 
-                <p ng-show="showMinimalSights()">Мінімальна відстань до гребеня даної висоти {{
-                    result.minimalSights.minimalDistance }} м</p>
+                    <p ng-show="movingTarget()">Упередження {{ result.sights.sideMovingAdjustment * 0.01 | s:
+                        'numberFormat':
+                        [2, '', ''] }} (враховано в поправку напрямку)</p>
 
-                <p ng-show="showSafeSights()">Безпечний приціл {{ result.sights.safeSights }} тис</p>
+                    <p ng-show="showFrontDispersal()">Фронт для 1 АГС {{ result.sights.oneDeviceFront | s:
+                        'numberFormat': [2,
+                        '', ''] }} тис</p>
 
+                    <p ng-show="showCollapsedFan()">Віяло зосереджене: {{ result.sights.fan | s: 'numberFormat': [2, '',
+                        '']
+                        }} тис</p>
+
+                    <p ng-show="showWidthFan()">Віяло по ширині: {{ result.sights.fan | s: 'numberFormat': [2, '', '']
+                        }} тис</p>
+
+                    <p>Розхід по {{ result.grenadesConsumption.grenadesPerDevice | s: 'numberFormat':
+                        [0, '', ''] }} гран/АГС</p>
+
+                    <p>Вузька вилка {{ result.sights.thinFork }}</p>
+
+                    <p>ΔX тис {{ result.sights.distanceChangePer1M }} м</p>
+
+                    <p>Час польоту {{ result.sights.flightTime }} с</p>
+                </div>
+                <div class="col-xs-6">
+                    <p ng-show="showSafeSights()">Безпечний приціл {{ result.sights.safeSights }} тис</p>
+
+                    <p ng-show="showMinimalSights()">Мінімальний приціл через гребінь {{
+                        result.minimalSights.minimalSights }}</p>
+
+                    <p ng-show="showMinimalSights()">Мінімальна дальність ВП-гребінь{{
+                        result.minimalSights.minimalDistance
+                        }} м</p>
+
+                    <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = {{
+                        result.sights.frontDispersal
+                        | s: 'numberFormat': [2, '', '']}} тис</p>
+
+                </div>
             </div>
         </div>
-        <div class="panel panel-default" ng-show="calculated()">
-            <div class="panel-heading">
-                <h4 class="panel-title">
-                    Відладочна інформація
-                </h4>
-            </div>
-            <div class="panel-body">
-                <p>Вектор вітру по напрямку стрільби: {{ result.meteoAdjustments.forwardWind }} м/с</p>
-
-                <p>Поправка на вітер (дистанція {{ data.distance }}): {{
-                    result.meteoAdjustments.forwardWindAdjustment }}</p>
-
-                <p>Поправка на температуру повітря і зарядів (дистанція {{ data.distance }}): {{
-                    result.meteoAdjustments.temperatureOfAirAdjustment }} + {{
-                    result.meteoAdjustments.temperatureOfShellAdjustment }}</p>
-
-                <p>Поправка на тиск (дистанція {{ data.distance }}): {{ result.meteoAdjustments.pressureAdjustment
-                    }}</p>
-
-                <p>Ефективна дистанція (топографічна + метеопоправки): {{ result.meteoAdjustments.effectiveDistance
-                    }}</p>
-
-                <p>Поправка на перевищення (кут, використовується топографічна дальність {{
-                    data.distance }}): {{ result.sights.angleAdjustment }}</p>
-
-                <p>Поправка на рух (фронтальне зміщення цілі за час польоту - {{ result.movingAdjustments.forwardOffset
-                    }}): {{ result.adjustedSights.forwardMovingAdjustment
-                    }}</p>
-
-                <p>Приціл для опорної дальності {{ result.sights.supportDistance}}: {{ result.sights.supportSights
-                    }}</p>
-
-                <p>Поправка на різницю з опорною дальністю: {{ result.sights.precisionAdjustment }}, поправлене значення
-                    прицілу: {{ result.sights.originalSights }} </p>
-
-                <p>Результат прицілювання - рахується як приціл + поправка на
-                    перевищення:
-                    {{ result.sights.originalSights + result.sights.angleAdjustment }}</p>
-
-                <p>Вектор вітру поперечний до напрямку стрільби (якщо на 3 годину - плюс, на 9 - мінус): {{
-                    result.meteoAdjustments.sideWind }} </p>
-
-                <p>Поправка на боковий вітер (з таблиці на дальність {{ data.distance }}): {{
-                    result.meteoAdjustments.sideWindAdjustment }}</p>
-
-                <p>Поправка на рух (бокове зміщення цілі за час польоту - {{ result.movingAdjustments.sideOffset }}): {{
-                    result.adjustedSights.sideMovingAdjustment
-                    }}</p>
-
-                <p>Поправка на деривацію (для {{data.distance}}): {{
-                    result.sights.derivationAdjustment }}</p>
-
-                <p>Сума бокових поправок (повинна дорівнювати значенню поправки напрямку в панелі результатів):
-                    {{ result.sights.sideWindAdjustment + result.sights.derivationAdjustment }} / 100</p>
-
-                <p>Для розрахунку вузької вилки використовується топодистанція, а не ефективна</p>
-
-                <p>Дельта Х береться відносно ефективної дистанції, а не топо</p>
-
-                <p>Час польоту береться відносно топо дистанції</p>
-                <pre>
-{{ data | json }}
-{{ result | json }}
-  </pre>
-            </div>
-        </div>
-
     </div>
 </section>
