@@ -18,7 +18,7 @@
 
                             <div class="col-xs-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="inputDistance" ng-model="data.distance"
+                                    <input type="number" class="form-control" id="inputDistance" ng-model="data.distance"
                                            name="inputDistance" max="1730" min="1" required="">
                                     <span class="input-group-addon">м</span>
                                 </div>
@@ -36,7 +36,7 @@
 
                             <div class="col-xs-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="inputElevation"
+                                    <input type="number" class="form-control" id="inputElevation"
                                            ng-model="data.targetElevation"
                                            required="">
                                     <span class="input-group-addon">м</span>
@@ -133,7 +133,7 @@
 
                             <div class="col-xs-9">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="inputPositionHeight"
+                                    <input type="number" class="form-control" id="inputPositionHeight"
                                            ng-model="data.positionElevation"
                                            required="">
                                     <span class="input-group-addon">м</span>
@@ -215,6 +215,10 @@
                     </div>
                 </div>
             </form>
+                <pre>
+        {{ data | json }}
+    </pre>
+
             <div class="row" ng-show="calculated()">
                 <div class="col-xs-12">
                     <h1 ng-show="result.invalid" class="text-danger">Дальність стрільби за межами ТТХ</h1>
