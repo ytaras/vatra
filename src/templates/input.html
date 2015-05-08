@@ -6,17 +6,17 @@
                 <div class="row">
                     <div class="col-xs-6 target-inputs">
                         <div class="form-group">
-                            <label for="inputType" class="control-label col-xs-3">Xaрактер цілі</label>
+                            <label for="inputType" class="col-xs-6">Xaрактер цілі</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <select class="form-control" id="inputType" ng-model="data.type"
                                         ng-options="t.value as t.label for t in types"></select>
                             </div>
                         </div>
                         <div class="form-group" show-errors="">
-                            <label for="inputDistance" class="control-label col-xs-3">Дальність</label>
+                            <label for="inputDistance" class="control-label col-xs-6">Дальність</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputDistance" ng-model="data.distance"
                                            name="inputDistance" max="1730" min="1" required="">
@@ -32,9 +32,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputElevation" class="control-label col-xs-3">Висота</label>
+                            <label for="inputElevation" class="control-label col-xs-6">Висота</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputElevation"
                                            ng-model="data.targetElevation"
@@ -44,9 +44,9 @@
                             </div>
                         </div>
                         <div class="form-group" ng-show="extendedTarget()">
-                            <label for="inputFront" class="control-label col-xs-3">Фронт</label>
+                            <label for="inputFront" class="control-label col-xs-6">Фронт</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputFront" ng-model="data.front"
                                            required="">
@@ -55,9 +55,9 @@
                             </div>
                         </div>
                         <div class="form-group" ng-show="movingTarget()">
-                            <label for="targetVelocityDirection" class="control-label col-xs-3">Напрямок руху</label>
+                            <label for="targetVelocityDirection" class="control-label col-xs-6">Напрямок руху</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="targetVelocityDirection"
                                            ng-model="data.targetVelocityDirection">
@@ -66,9 +66,9 @@
                             </div>
                         </div>
                         <div class="form-group" ng-show="movingTarget()">
-                            <label for="targetVelocity" class="control-label col-xs-3">Швидкість</label>
+                            <label for="targetVelocity" class="control-label col-xs-6">Швидкість</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="targetVelocity"
                                            ng-model="data.targetVelocity">
@@ -77,9 +77,9 @@
                             </div>
                         </div>
                         <div class="form-group" ng-show="extendedTarget()">
-                            <label for="inputDepth" class="control-label col-xs-3">Глибина</label>
+                            <label for="inputDepth" class="control-label col-xs-6">Глибина</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputDepth" ng-model="data.depth"
                                            required="">
@@ -88,26 +88,26 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputTrajectory" class="control-label col-xs-3">Траекторія</label>
+                            <label for="inputTrajectory" class="control-label col-xs-6">Траекторія</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <select class="form-control" id="inputTrajectory" ng-model="data.trajectory"
                                         ng-options="t.value as t.label for t in trajectories"></select>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputTask" class="control-label col-xs-3">Завдання</label>
+                            <label for="inputTask" class="control-label col-xs-6">Завдання</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <select class="form-control" id="inputTask" ng-model="data.task"
                                         ng-options="t.value as t.label for t in tasks"
                                         required=""></select>
                             </div>
                         </div>
                         <div class="form-group position-inputs">
-                            <label for="inputDevicesNumber" class="control-label col-xs-3">Гранатометів</label>
+                            <label for="inputDevicesNumber" class="control-label col-xs-6">Гранатометів</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <select class="form-control" id="inputDevicesNumber" ng-model="data.devicesNumber"
                                             ng-options="t.value as t.label for t in counts" required=""></select>
@@ -116,9 +116,9 @@
                             </div>
                         </div>
                         <div class="form-group position-inputs">
-                            <label for="inputDevicesInterval" class="control-label col-xs-3">Інтервал</label>
+                            <label for="inputDevicesInterval" class="control-label col-xs-6">Інтервал</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputDevicesInterval"
                                            ng-model="data.interval">
@@ -127,9 +127,9 @@
                             </div>
                         </div>
                         <div class="form-group position-inputs">
-                            <label for="inputPositionHeight" class="control-label col-xs-3">Висота ВП</label>
+                            <label for="inputPositionHeight" class="control-label col-xs-6">Висота ВП</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputPositionHeight"
                                            ng-model="data.positionElevation"
@@ -143,9 +143,9 @@
                     <div class="col-xs-6">
 
                         <div class="form-group meteo-inputs">
-                            <label for="inputTemperature" class="control-label col-xs-3">Температура повітря</label>
+                            <label for="inputTemperature" class="control-label col-xs-6">Температура повітря</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputTemperature"
                                            ng-model="data.temperature">
@@ -154,9 +154,9 @@
                             </div>
                         </div>
                         <div class="form-group meteo-inputs">
-                            <label for="inputWindDirection" class="control-label col-xs-3">Кут вітру</label>
+                            <label for="inputWindDirection" class="control-label col-xs-6">Кут вітру</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputWindDirection"
                                            ng-model="data.windDirection">
@@ -165,9 +165,9 @@
                             </div>
                         </div>
                         <div class="form-group meteo-inputs">
-                            <label for="inputWindSpeed" class="control-label col-xs-3">Швидкість вітру</label>
+                            <label for="inputWindSpeed" class="control-label col-xs-6">Швидкість вітру</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputWindSpeed"
                                            ng-model="data.windSpeed">
@@ -176,9 +176,9 @@
                             </div>
                         </div>
                         <div class="form-group other-inputs">
-                            <label for="crestHeight" class="control-label col-xs-3">Висота гребеня</label>
+                            <label for="crestHeight" class="control-label col-xs-6">Висота гребеня</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="crestHeight"
                                            ng-model="data.crestHeight">
@@ -187,9 +187,9 @@
                             </div>
                         </div>
                         <div class="form-group other-inputs">
-                            <label for="crestDistance" class="control-label col-xs-3">Відстань до гребеня</label>
+                            <label for="crestDistance" class="control-label col-xs-6">Відстань до гребеня</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="crestDistance"
                                            ng-model="data.crestDistance">
@@ -198,10 +198,10 @@
                             </div>
                         </div>
                         <div class="form-group other-inputs">
-                            <label for="ourForcesDistance" class="control-label col-xs-3">Відстань до наших
+                            <label for="ourForcesDistance" class="control-label col-xs-6">Відстань до наших
                                 військ</label>
 
-                            <div class="col-xs-9">
+                            <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="ourForcesDistance"
                                            ng-model="data.ourForcesDistance">
