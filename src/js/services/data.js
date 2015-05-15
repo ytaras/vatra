@@ -26,17 +26,19 @@ angular.module('Vatra.services.Data', ['Vatra.services.HardcodedTables', 'Vatra.
             result.minimalSights = calculateMinimalSights(data);
             return result;
         }
-    }).factory('calculateMinimalSights', function (minimalSightsForCrest, lookupByDistance, lookupSupportDistance, minimalDistanceForCrest) {
+    }).factory('calculateMinimalSights', function (minimalSightsForCrest, sightsTable, lookupByDistance, lookupSupportDistance, minimalDistanceForCrest) {
         return function (data) {
             if (!data.crestHeight || !data.crestDistance) {
                 return {}
             }
             var row = lookupByDistance(minimalSightsForCrest, data.crestDistance);
-            var crestSupportDistance = lookupSupportDistance(row, data.crestHeight);
+            var crestSupportHeight = lookupSupportDistance(row, data.crestHeight);
+            var minimalDistance = minimalDistanceForCrest[crestSupportHeight];
             return {
-                crestSupportDistance: crestSupportDistance,
-                minimalSights: row[crestSupportDistance],
-                minimalDistance: minimalDistanceForCrest[crestSupportDistance]
+                crestSupportDistance: crestSupportHeight,
+                minimalSights: row[crestSupportHeight],
+                minimalDistance: minimalDistance,
+                minimalSightsWithChange: minimalSightsForCrest[minimalDistance][crestSupportHeight]
             }
         }
     }).factory('meteoAdjustments', function (forwardWindAdjustment, sideWindAdjustment, pressureAdjustment,
