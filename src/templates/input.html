@@ -248,7 +248,7 @@
                     <h1 ng-show="isNotSafe()" class="text-danger">Небезпечна стрільба. Ураження своїх військ</h1>
                 </div>
                 <div class="col-xs-6">
-                    <p>Приціл: <span class="generic-output">{{ result.sights.adjustedSights | s: 'numberFormat': [0, '', '']
+                    <p>Приціл: <span ng-class="{false: 'generic-output', true: 'safety-output'}[isNotSafe()]">{{ result.sights.adjustedSights | s: 'numberFormat': [0, '', '']
                         }}</span></p>
 
                     <p>Поправка напрямку <span class="generic-output">{{ result.sights.sideAdjustment | s: 'numberFormat':
@@ -279,7 +279,7 @@
                     <p>Час польоту <span class="generic-output">{{ result.sights.flightTime }}</span> с</p>
                 </div>
                 <div class="col-xs-6">
-                    <p ng-show="showSafeSights()">Безпечний приціл <span class="safety-output">{{ result.sights.safeSights }}</span>
+                    <p ng-show="showSafeSights()">Безпечний приціл <span class="generic-output">{{ result.sights.safeSights }}</span>
                         тис</p>
 
                     <p ng-show="showMinimalSights()">Мін. приціл через гребінь з цієї позиції <span class="safety-output">{{
@@ -291,7 +291,7 @@
                         result.minimalSights.minimalDistance
                         }}</span> м</p>
 
-                    <p ng-show="showFrontDispersal()">Необхідне розсіювання по фронту, 15 м = <span
+                    <p ng-show="showFrontDispersal()"><span class="front-dispersal-label">Необхідне розсіювання по фронту</span>, 15 м = <span
                             class="generic-output">{{
                         result.sights.frontDispersal
                         | s: 'numberFormat': [2, '', '']}}</span> тис</p>
