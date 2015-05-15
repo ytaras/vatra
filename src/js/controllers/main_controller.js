@@ -80,8 +80,7 @@ angular.module('Vatra.controllers.Main', [
         positionElevation: 100,
         targetElevation: 100,
         targetVelocityDirection: 0,
-        targetVelocity: 0,
-        ourForcesDistance: 0
+        targetVelocity: 0
     };
     $scope.result = {};
 
