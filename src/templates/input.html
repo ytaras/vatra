@@ -24,7 +24,7 @@
                                 </div>
                                         <span ng-show="inputForm.inputDistance.$dirty &amp;&amp; inputForm.inputDistance.$invalid"
                                               class="help-block">
-                                            <span ng-show="inputForm.inputDistance.$error.required">Дистанція до цілі обов"язкова</span>
+                                            <span ng-show="inputForm.inputDistance.$error.required">Дальність до цілі обов"язкова</span>
                                             <span ng-show="inputForm.inputDistance.$error.max">Дальність стрільби за межами ТТХ</span>
                                             <span ng-show="inputForm.inputDistance.$error.min">Введіть позитивне значення</span>
                                             <span ng-show="inputForm.inputDistance.$error.number">Введіть число</span>
@@ -49,31 +49,13 @@
                             <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputFront" ng-model="data.front"
-                                           required="">
+                                           ng-required="extendedTarget()">
                                     <span class="input-group-addon">м</span>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="form-group" ng-show="movingTarget()">
-                            <label for="targetVelocityDirection" class="control-label col-xs-6">Напрямок руху</label>
-
-                            <div class="col-xs-6">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="targetVelocityDirection"
-                                           ng-model="data.targetVelocityDirection">
-                                    <span class="input-group-addon">год</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group" ng-show="movingTarget()">
-                            <label for="targetVelocity" class="control-label col-xs-6">Швидкість</label>
-
-                            <div class="col-xs-6">
-                                <div class="input-group">
-                                    <input type="number" class="form-control" id="targetVelocity"
-                                           ng-model="data.targetVelocity">
-                                    <span class="input-group-addon">км/год</span>
-                                </div>
+                                <span ng-show="inputForm.inputFront.$dirty &amp;&amp; inputForm.inputFront.$invalid"
+                                      class="help-block">
+                                            <span ng-show="inputForm.inputFront.$error.required">Фронт цілі обов"язковий</span>
+                                        </span>
                             </div>
                         </div>
                         <div class="form-group" ng-show="extendedTarget()">
@@ -82,9 +64,49 @@
                             <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputDepth" ng-model="data.depth"
-                                           required="">
+                                           ng-required="extendedTarget()">
                                     <span class="input-group-addon">м</span>
+                                    <span ng-show="inputForm.inputDepth.$dirty &amp;&amp; inputForm.inputDepth.$invalid"
+                                          class="help-block">
+                                            <span ng-show="inputForm.inputDepth.$error.required">Глибина цілі обов"язкова</span>
+                                    </span>
+
                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group" ng-show="movingTarget()">
+                            <label for="targetVelocityDirection" class="control-label col-xs-6">Напрямок руху</label>
+
+                            <div class="col-xs-6">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="targetVelocityDirection"
+                                           ng-model="data.targetVelocityDirection" ng-required="movingTarget()">
+                                    <span class="input-group-addon">год</span>
+                                </div>
+
+                                <span ng-show="inputForm.targetVelocityDirection.$dirty &amp;&amp; inputForm.targetVelocityDirection.$invalid"
+                                                                          class="help-block">
+                                            <span ng-show="inputForm.targetVelocityDirection.$error.required">Напрямок руху цілі обов"язковий</span>
+                                    </span>
+
+                            </div>
+                        </div>
+                        <div class="form-group" ng-show="movingTarget()">
+                            <label for="targetVelocity" class="control-label col-xs-6">Швидкість</label>
+
+                            <div class="col-xs-6">
+                                <div class="input-group">
+                                    <input type="number" class="form-control" id="targetVelocity"
+                                           ng-model="data.targetVelocity" ng-required="movingTarget()">
+                                    <span class="input-group-addon">км/год</span>
+                                </div>
+
+                                <span ng-show="inputForm.targetVelocity.$dirty &amp;&amp; inputForm.targetVelocity.$invalid"
+                                      class="help-block">
+                                            <span ng-show="inputForm.targetVelocity.$error.required">Швидкість руху цілі обов"язкова</span>
+                                    </span>
+
                             </div>
                         </div>
                         <div class="form-group">
@@ -115,7 +137,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group position-inputs">
+                        <div class="form-group position-inputs" ng-show="showInterval()">
                             <label for="inputDevicesInterval" class="control-label col-xs-6">Інтервал</label>
 
                             <div class="col-xs-6">

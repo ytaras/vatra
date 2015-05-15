@@ -32,6 +32,9 @@ angular.module('Vatra.controllers.Main', [
         return $scope.data.devicesNumber == 2 && $scope.extendedTarget();
     };
 
+    $scope.showInterval = function() {
+        return $scope.data.devicesNumber == 2;
+    };
 
     $scope.singleTarget = function () {
         return $scope.data.type == 'single';
@@ -70,8 +73,6 @@ angular.module('Vatra.controllers.Main', [
         trajectory: 'flat',
         task: 'supress',
         distance: 400,
-        front: 15,
-        depth: 15,
         windSpeed: 0,
         temperature: 15,
         windDirection: 12,
