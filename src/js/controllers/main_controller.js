@@ -71,21 +71,27 @@ angular.module('Vatra.controllers.Main', [
         devicesNumber: 1,
         type: 'single',
         trajectory: 'flat',
-        task: 'supress',
-        distance: 400,
+        task: 'supress'
+    };
+    $scope.defaultValues = {
         windSpeed: 0,
         temperature: 15,
         windDirection: 12,
         interval: 15,
         positionElevation: 100,
         targetElevation: 100,
+        distance: 400,
         targetVelocityDirection: 0,
         targetVelocity: 0
     };
     $scope.result = {};
 
+    $scope.dataWithDefaults = function () {
+        return _.defaults($scope.data, $scope.defaultValues)
+    }
+
     $scope.count = function (data) {
-        $scope.result = calculateSights(data);
+        $scope.result = calculateSights($scope.dataWithDefaults());
 
         var invalidFlat = data.trajectory == 'flat' && $scope.result.sights.adjustedSights > 667;
         var invalidHover = data.trajectory == 'hover' &&

@@ -19,7 +19,7 @@
                             <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputDistance" ng-model="data.distance"
-                                           name="inputDistance" max="1730" min="1" required="">
+                                           placeholder=" {{ defaultValues.distance }}" name="inputDistance" max="1730" min="1">
                                     <span class="input-group-addon">м</span>
                                 </div>
                                         <span ng-show="inputForm.inputDistance.$dirty &amp;&amp; inputForm.inputDistance.$invalid"
@@ -38,7 +38,7 @@
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputElevation"
                                            ng-model="data.targetElevation"
-                                           required="">
+                                           placeholder="{{defaultValues.targetElevation}}">
                                     <span class="input-group-addon">м</span>
                                 </div>
                             </div>
@@ -155,7 +155,7 @@
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputPositionHeight"
                                            ng-model="data.positionElevation"
-                                           required="">
+                                           placeholder="{{defaultValues.positionElevation}}">
                                     <span class="input-group-addon">м</span>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                             <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputTemperature"
-                                           ng-model="data.temperature">
+                                           ng-model="data.temperature" placeholder="{{defaultValues.temperature}}">
                                     <span class="input-group-addon">град</span>
                                 </div>
                             </div>
@@ -180,7 +180,10 @@
 
                             <div class="col-xs-6">
                                 <div class="input-group">
-                                    <input type="number" class="form-control" id="inputWindDirection"
+                                    <input type="number"
+                                           class="form-control"
+                                           id="inputWindDirection"
+                                           placeholder="{{defaultValues.windDirection}}"
                                            ng-model="data.windDirection">
                                     <span class="input-group-addon">год</span>
                                 </div>
@@ -192,7 +195,8 @@
                             <div class="col-xs-6">
                                 <div class="input-group">
                                     <input type="number" class="form-control" id="inputWindSpeed"
-                                           ng-model="data.windSpeed">
+                                           ng-model="data.windSpeed"
+                                           placeholder="{{defaultValues.windSpeed}}">
                                     <span class="input-group-addon">м/c</span>
                                 </div>
                             </div>
