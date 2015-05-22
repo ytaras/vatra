@@ -9,4 +9,8 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <platform name="android">
+        <icon src="res/icon.png" />
+    </platform>
+    <splash src="res/splash.png" />
 </widget>
